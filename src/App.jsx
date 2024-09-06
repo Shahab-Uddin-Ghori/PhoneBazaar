@@ -1,5 +1,5 @@
 import React from "react";
-import UserSignup from "./authentication/admin/adminSingup";
+import UserSignup from "./authentication/user/UserSingup";
 
 function App() {
   return (
