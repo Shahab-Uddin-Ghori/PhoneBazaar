@@ -1,5 +1,18 @@
 import React, { useState } from "react";
 import { FaGoogle, FaFacebook } from "react-icons/fa"; // Icons for Google and Facebook
+import {
+  auth,
+  getAuth,
+  createUserWithEmailAndPassword,
+  // signInWithPopup,
+  // GoogleAuthProvider,
+  // provider,
+} from "../../firebase";
+
+// react toast import
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import GoogleSingInLogin from "../../components/GoogleSingInLogin";
 
 const UserSignup = () => {
   const [name, setName] = useState("");
@@ -8,16 +21,43 @@ const UserSignup = () => {
   const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  //   react toast
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle signup logic here
+    setError(null);
+
+    if (password !== confirmPassword) {
+      toast.error("Password mismatch. Please enter the same password.");
+      return;
+    }
+    try {
+      // singup func
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      //   userdata
+      const user = userCredential.user;
+      toast.success("Sign up successful!");
+      console.clear();
+      console.log("🚀 ~ .then ~ user:", user);
+    } catch (error) {
+      setError(error.message);
+      console.clear();
+      toast.error(`Signup failed: ${error.message}`);
+      console.log("🚀 ~ handleSubmit ~ error.message:", error.message);
+    }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-2">
+    <div className="flex justify-center items-center min-h-screen  p-2">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold mb-4">Sign Up</h2>
+        <h2 className="text-xl font-bold mb-4 text-black">Sign Up</h2>
 
         {/* form submit */}
         <form onSubmit={handleSubmit}>
@@ -69,7 +109,7 @@ const UserSignup = () => {
             />
           </div>
 
-          {/* Contact number... */}
+          {/* Contact number */}
           <div className="mb-4">
             <label htmlFor="contact" className="block text-gray-700">
               Contact
@@ -87,7 +127,7 @@ const UserSignup = () => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
               placeholder="Enter your contact number..."
-              maxLength="11" // Optional: Limit the number of digits (adjust as needed)
+              maxLength="11"
             />
           </div>
 
@@ -143,17 +183,18 @@ const UserSignup = () => {
             <span className="mx-4 text-gray-600">or</span>
             <div className="w-full border-t border-gray-300"></div>
           </div>
-
-          {/* login with Google and fb */}
-          <div className="flex justify-around mt-6">
-            <button className="flex items-center justify-center w-12 h-12 bg-gray-200 rounded-full shadow-md hover:bg-gray-300">
-              <FaGoogle className="text-gray-600 text-xl" />
-            </button>
-            <button className="flex items-center justify-center w-12 h-12 bg-gray-200 rounded-full shadow-md hover:bg-gray-300">
-              <FaFacebook className="text-blue-600 text-xl" />
-            </button>
-          </div>
         </form>
+
+        {/* login with Google and fb */}
+        <div className="flex justify-around mt-6">
+          {/* singup with google */}
+          <GoogleSingInLogin toasttext={"Sign up successful!"} />
+
+          {/* singup with facebook */}
+          <button className="flex items-center justify-center w-12 h-12 bg-gray-200 rounded-full shadow-md hover:bg-gray-300">
+            <FaFacebook className="text-blue-600 text-xl" />
+          </button>
+        </div>
       </div>
     </div>
   );
