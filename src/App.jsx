@@ -31,6 +31,15 @@ function App() {
           <Route path="/Messages" element={<Messages />} />
           <Route path="/CreateAd" element={<CreateAd />} />
           <Route path="/Profile" element={<Profile />} />
+          <Route
+            path="/*"
+            element={
+              <h1 className=" w-full h-screen flex justify-center items-center">
+                404 Error <br />
+                Page not found
+              </h1>
+            }
+          />
         </Routes>
       </BrowserRouter>
       <ToastContainer />

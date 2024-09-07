@@ -68,7 +68,7 @@ function Header() {
           <Link
             onClick={() =>
               user
-                ? toast.success("Your Messages")
+                ? toast.success("Create new ad")
                 : toast.error("Please Login first")
             }
             to={user ? "/CreateAd" : "/UserLogin"}
