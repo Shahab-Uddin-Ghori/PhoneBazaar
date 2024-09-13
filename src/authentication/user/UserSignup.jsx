@@ -1,203 +1,246 @@
-import React, { useState } from "react";
-import { FaGoogle, FaFacebook } from "react-icons/fa"; // Icons for Google and Facebook
-import {
-  auth,
-  getAuth,
-  createUserWithEmailAndPassword,
-  // signInWithPopup,
-  // GoogleAuthProvider,
-  // provider,
-} from "../../firebase";
-
-// react toast import
+import React, { useContext, useEffect, useState } from "react";
+import { Input, Ripple, initTWE } from "tw-elements";
+import ModeThemeContext, {
+  ThemeContext,
+} from "../../components/ModeThemeContext";
+import { FaGoogle } from "react-icons/fa";
+import { BiPhone } from "react-icons/bi";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import GoogleSingInLogin from "../../components/GoogleSingInLogin";
 
-const UserSignup = () => {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
+// firebase import
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../firebase";
+import { UserContext } from "../../components/UserContextProvider";
+import { doc, setDoc } from "firebase/firestore";
+import SpinnerLoader from "../../components/SpinnerLoader";
+
+function UserSignup() {
+  const [theme, setTheme] = useContext(ThemeContext);
+  const [loading, setLoading] = useState(false);
+
+  // to navigate user
+  const navigate = useNavigate();
+
+  // for firebase
+
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
-  const [contact, setContact] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(null);
 
-  //   react toast
+  // const { user,setUser } = useContext(UserContext);
 
-  const handleSubmit = async (e) => {
+  // handle singup form func
+  const handleSignUpForm = async (e) => {
     e.preventDefault();
-    setError(null);
 
-    if (password !== confirmPassword) {
-      toast.error("Password mismatch. Please enter the same password.");
-      return;
-    }
     try {
-      // singup func
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
+      // loading is trure when submiting
+      console.log(email, password); // checking user email and password before set in firebase
+      setLoading(true);
+      // firebase func or signup
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      const docRef = doc(db, "users", user.user.uid);
+      const docAdded = await setDoc(docRef, {
+        username,
         email,
-        password
-      );
+        uid: user.user.uid,
+      });
+      setLoading(false);
 
-      //   userdata
-      const user = userCredential.user;
-      toast.success("Sign up successful!");
-      console.clear();
-      console.log("🚀 ~ .then ~ user:", user);
+      // checking User
+      toast.success("signIn successfull");
+      console.log("User signed up and document added:", user);
+      console.log("user==>", user);
+      navigate("/");
     } catch (error) {
-      setError(error.message);
-      console.clear();
-      toast.error(`Signup failed: ${error.message}`);
-      console.log("🚀 ~ handleSubmit ~ error.message:", error.message);
+      toast.error(error.message);
+      setLoading(false);
     }
   };
 
+  useEffect(() => {
+    initTWE({ Input, Ripple });
+  }, []);
+
   return (
-    <div className="flex justify-center items-center min-h-screen  p-2">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold mb-4 text-black">Sign Up</h2>
-
-        {/* form submit */}
-        <form onSubmit={handleSubmit}>
-          {/* name */}
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-              placeholder="Enter your name..."
-            />
-          </div>
-
-          {/* username */}
-          <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-700">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-              placeholder="Enter your username..."
-            />
-          </div>
-
-          {/* email */}
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-              placeholder="Enter your email..."
-            />
-          </div>
-
-          {/* Contact number */}
-          <div className="mb-4">
-            <label htmlFor="contact" className="block text-gray-700">
-              Contact
-            </label>
-            <input
-              type="text"
-              id="contact"
-              value={contact}
-              onChange={(e) => {
-                const regex = /^[0-9]*$/; // Only allow numbers
-                if (regex.test(e.target.value)) {
-                  setContact(e.target.value);
-                }
-              }}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-              placeholder="Enter your contact number..."
-              maxLength="11"
-            />
-          </div>
-
-          {/* Password */}
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-              placeholder="Create new password..."
-            />
-          </div>
-
-          {/* confirm password */}
-          <div className="mb-6">
-            <label htmlFor="confirm-password" className="block text-gray-700">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              id="confirm-password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-              placeholder="Confirm password..."
-            />
-          </div>
-          {/* forgot password */}
-          <div className="mb-6">
-            <a href="#" className="text-indigo-600 hover:text-indigo-700">
-              Forgot Password?
-            </a>
-          </div>
-
-          {/* sumbit button */}
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-indigo-600 text-white font-bold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+    <>
+      {loading ? (
+        <SpinnerLoader />
+      ) : (
+        <section
+          className={`${
+            theme == "light"
+              ? "bg-zinc-100 h-screen text-zinc-800"
+              : "bg-gray-800 h-screen text-zinc-500"
+          }""`}
+        >
+          <div
+            className={`${
+              theme == "light"
+                ? "bg-zinc-100 h-screen text-zinc-800"
+                : "bg-gray-800 h-screen text-zinc-500"
+            } container h-full px-6 py-24`}
           >
-            Sign Up
-          </button>
+            <div className="flex h-full flex-wrap items-center justify-center lg:justify-between">
+              {/*  */}
 
-          {/* hr */}
-          <div className="flex items-center justify-between mt-6">
-            <div className="w-full border-t border-gray-300"></div>
-            <span className="mx-4 text-gray-600">or</span>
-            <div className="w-full border-t border-gray-300"></div>
+              {/* img */}
+              <div className="mb-12 md:mb-8 md:w-8/12 lg:w-6/12">
+                <img
+                  src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                  className="w-full"
+                  alt="Phone image"
+                />
+              </div>
+              {/*  */}
+
+              <div className="md:w-8/12 lg:ms-6 lg:w-5/12">
+                {/* form */}
+
+                {/*  */}
+                <form onSubmit={handleSignUpForm}>
+                  {/*  */}
+
+                  {/* username */}
+                  <div className="relative mb-6">
+                    <input
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUserName(e.target.value)}
+                      className="peer block  w-full rounded border-0 bg-transparent px-3 py-[0.02rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary border-zinc-300 border-b-2"
+                      id="username"
+                      required
+                    />
+                    <label
+                      htmlFor="username"
+                      className="absolute left-3 -top-5 mb-0  text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.05rem] peer-focus:scale-[0.8] peer-focus:text-primary hover:cursor-pointer"
+                    >
+                      Username
+                    </label>
+                  </div>
+
+                  {/* Email */}
+                  <div className="relative mb-6">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="peer block  w-full rounded border-0 bg-transparent px-3 py-[0.02rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary border-zinc-300 border-b-2"
+                      id="emailInput"
+                      required
+                    />
+                    <label
+                      htmlFor="emailInput"
+                      className="absolute left-3 -top-5 mb-0  text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.05rem] peer-focus:scale-[0.8] peer-focus:text-primary hover:cursor-pointer"
+                    >
+                      Email address
+                    </label>
+                  </div>
+                  {/*  */}
+
+                  {/* Password */}
+                  <div className="relative mb-6">
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="peer block  w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none border-zinc-300 border-b-2 transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary"
+                      id="passwordInput"
+                      required
+                    />
+                    <label
+                      htmlFor="passwordInput"
+                      className="absolute left-3 -top-1 mb-0  text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.05rem] peer-focus:scale-[0.8] peer-focus:text-primary hover:cursor-pointer "
+                    >
+                      Password
+                    </label>
+                  </div>
+                  {/*  */}
+
+                  {/* checkbox */}
+                  <div className="mb-6 flex items-center justify-between">
+                    <div className="block">
+                      <input
+                        type="checkbox"
+                        id="termsCheck"
+                        className="h-[1.125rem] w-[1.125rem] rounded border-secondary-500 checked:bg-orange-700 "
+                        defaultChecked
+                      />
+                      <label htmlFor="termsCheck" className="ms-2">
+                        I agree to the terms
+                      </label>
+                    </div>
+                    <Link to="/" className="text-primary dark:text-primary-400">
+                      Forgot Password?
+                    </Link>
+                  </div>
+                  {/*  */}
+
+                  {/* goto login */}
+                  <div
+                    to="/"
+                    className="text-primary dark:text-primary-400 block mb-5"
+                  >
+                    <span>already have an account? &nbsp;</span>
+                    <Link
+                      to="/UserLogin"
+                      className="text-orange-600 font-semibold"
+                    >
+                      Click Here to Login
+                    </Link>
+                  </div>
+                  {/*  */}
+
+                  {/* submit / register */}
+                  <button
+                    type="submit"
+                    className={` ${
+                      theme == "light" ? "bg-zinc-900" : "bg-orange-700"
+                    } w-full rounded  px-7 pb-2.5 pt-3 text-sm font-medium text-white transition duration-150 ease-in-out hover:bg-orange-700 focus:outline-none`}
+                  >
+                    Register
+                  </button>
+                  {/*  */}
+
+                  <div className="my-4 flex items-center">
+                    <div className="flex-1 border-t border-neutral-300"></div>
+                    <p className="mx-4 text-center font-semibold">OR</p>
+                    <div className="flex-1 border-t border-neutral-300"></div>
+                  </div>
+
+                  {/* Google button */}
+                  <button
+                    className={`${
+                      theme == "light" ? "bg-zinc-900" : "bg-orange-700"
+                    } mb-3 flex w-full items-center justify-center rounded  px-7 pb-2.5 pt-3 text-sm font-medium text-white hover:bg-orange-700`}
+                    href="#!"
+                    role="button"
+                  >
+                    <FaGoogle size={20} />
+                    &nbsp; Continue with Google
+                  </button>
+
+                  {/* Phone button */}
+                  <button
+                    className={`${
+                      theme == "light" ? "bg-zinc-900" : "bg-orange-700"
+                    } hover:bg-orange-700 mb-3 flex w-full items-center justify-center rounded  px-7 pb-2.5 pt-3 text-sm font-medium text-white`}
+                    href="#!"
+                    role="button"
+                  >
+                    <BiPhone size={21} />
+                    &nbsp; Continue with Phone
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
-        </form>
-
-        {/* login with Google and fb */}
-        <div className="flex justify-around mt-6">
-          {/* singup with google */}
-          <GoogleSingInLogin toasttext={"Sign up successful!"} />
-
-          {/* singup with facebook */}
-          <button className="flex items-center justify-center w-12 h-12 bg-gray-200 rounded-full shadow-md hover:bg-gray-300">
-            <FaFacebook className="text-blue-600 text-xl" />
-          </button>
-        </div>
-      </div>
-    </div>
+        </section>
+      )}
+    </>
   );
-};
+}
 
 export default UserSignup;

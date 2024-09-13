@@ -1,150 +1,270 @@
-import React, { useState, useEffect, useContext } from "react";
-import { FaUser } from "react-icons/fa";
-import { BsSun, BsMoon } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
-import ModeContex, { themeContext } from "./ModeContex";
-import { getAuth, signOut, onAuthStateChanged } from "../firebase";
+import React, { useContext, useEffect, useState } from "react";
+import { getAuth, signOut } from "firebase/auth";
+// import { auth } from "../firebase";
+import { FiSearch, FiSun, FiMoon } from "react-icons/fi";
+import { FaUserCircle } from "react-icons/fa";
+import Logo from "../Images/Logo.png";
+import { Link } from "react-router-dom";
+import { ThemeContext } from "./ModeThemeContext";
+import { UserContext } from "./UserContextProvider";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Header() {
-  const [theme, setTheme] = useContext(themeContext);
-  const [user, setUser] = useState(null); // State to track if user is logged in
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [theme, setTheme] = useContext(ThemeContext);
+  const { user } = useContext(UserContext);
+  // console.log(theme);
 
-  const navigate = useNavigate();
+  // mode of toggle theme
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
-  // Check user authentication status on component mount
+  // toggle profile
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // check user state to navigate user Acc..
   useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser); // Set the user if they are logged in
-    });
-
-    return () => unsubscribe(); // Cleanup the listener when component unmounts
-  }, []);
+    if (user.isLogin == true) {
+      setIsLoggedIn(true);
+    } else if (user.isLogin == false) {
+      setIsLoggedIn(false);
+    }
+  }, [user]);
 
   return (
-    <header
-      className={` body-font shadow-md flex flex-wrap pl-10 pr-10 pt-5 pb-5 w-full items-center justify-between ${
-        theme === "light" ? "text-gray-600 " : "text-white"
-      }`}
+    <nav
+      className={`${
+        theme == "light"
+          ? "bg-gray-200 text-zinc-800"
+          : "bg-zinc-900 text-zinc-200"
+      }  shadow-md`}
     >
-      {/* svg logo and brands links */}
-      <div className="flex justify-center items-center gap-5">
-        <Link
-          to="/"
-          className="flex title-font font-medium items-center mb-4 md:mb-0"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            className="w-10 h-10 text-white p-2 bg-yellow-500 rounded-full"
-            viewBox="0 0 24 24"
-          >
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-          </svg>
-          <span className="ml-3 text-md">Phone Bazaar Wala</span>
-        </Link>
+      <div className="flex justify-between items-center ml-10">
+        {/* Left Side: Logo and Links */}
+        <div className="flex items-center space-x-5">
+          {/* Logo */}
+          <Link to="/" className="flex items-center">
+            <img src={`${Logo}`} alt="Logo" className="w-24" />
+          </Link>
 
-        {/* links */}
-        <div>
-          <Link to="/Brands" className="mr-5 hover:text-gray-400">
-            Brands
-          </Link>
-          <Link
-            onClick={() =>
-              user
-                ? toast.success("Your Messages")
-                : toast.error("Please Login first")
-            }
-            to={user ? "/Messages" : "/UserLogin"}
-            className="mr-5 hover:text-gray-400"
+          {/* Links */}
+
+          {/* explore */}
+          <ul className={` flex space-x-4`}>
+            <li
+              className={`${
+                theme == "light"
+                  ? "text-zinc-700 hover:text-zinc-900"
+                  : "text-zinc-400 hover:text-orange-600"
+              }`}
+            >
+              <Link to="./Explore">Explore</Link>
+            </li>
+            {/* brands */}
+            <li
+              className={`${
+                theme == "light"
+                  ? "text-zinc-700 hover:text-zinc-900"
+                  : "text-zinc-400 hover:text-orange-600"
+              }`}
+            >
+              <Link to="./Brands">Brands</Link>
+            </li>
+            {/* My Ads */}
+            <li
+              className={`${
+                theme == "light"
+                  ? "text-zinc-700 hover:text-zinc-900"
+                  : "text-zinc-400 hover:text-orange-600"
+              }`}
+            >
+              <Link to="./MyAds">My Ads</Link>
+            </li>
+            {/* messages */}
+            <li
+              className={`${
+                theme == "light"
+                  ? "text-zinc-700 hover:text-zinc-900"
+                  : "text-zinc-400 hover:text-orange-600"
+              }`}
+            >
+              <Link to="./Messages">Messages</Link>
+            </li>
+            {/* contact us */}
+            <li
+              className={`${
+                theme == "light"
+                  ? "text-zinc-700 hover:text-zinc-900"
+                  : "text-zinc-400 hover:text-orange-600"
+              }`}
+            >
+              <Link to="./ContactUs">Contact us</Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Center: Empty */}
+
+        {/* Right Side: Search, Profile, and Theme Toggle */}
+        <div className="flex items-center space-x-4 mr-10">
+          {/* Search Input */}
+          <div className="relative flex items-center justify-center">
+            <input
+              type="text"
+              placeholder="Search..."
+              className={`${
+                theme == "light"
+                  ? "bg-zinc-50 text-zinc-700"
+                  : "bg-zinc-800 text-zinc-100 "
+              } px-4 py-2 rounded-full border-none focus:outline-none shadow-sm`}
+            />
+            <FiSearch className="absolute top-3 right-3 text-orange-700 dark:text-gray-400" />
+          </div>
+
+          {/* Profile Dropdown */}
+          <div className="relative">
+            <button
+              onClick={toggleMenu}
+              className={`${
+                theme == " light" ? "text-zinc-800" : "text-zinc-100"
+              }" focus:outline-none"`}
+            >
+              <FaUserCircle size={25} className="mt-2" />
+            </button>
+
+            {isMenuOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 shadow-lg py-2 rounded-lg">
+                {!isLoggedIn ? (
+                  <>
+                    <Link
+                      to="./UserLogin"
+                      className="block px-4 py-2 text-gray-700 dark:text-gray-300"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      to="./UserSignUp"
+                      className="block px-4 py-2 text-gray-700 dark:text-gray-300"
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="./Profile"
+                      className="block px-4 py-2 text-gray-700 dark:text-gray-300"
+                    >
+                      Profile
+                    </Link>
+                    <Link
+                      className="block px-4 py-2 text-gray-700 dark:text-gray-300"
+                      onClick={() => {
+                        const auth = getAuth();
+                        signOut(auth)
+                          .then(() => {
+                            // Sign-out successful.
+                            toast.success("User Logout Successfully");
+                          })
+                          .catch((error) => {
+                            // An error happened.
+                          });
+                      }}
+                    >
+                      Logout
+                    </Link>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Theme Toggle */}
+          <div
+            className={`w-12 h-6 bg-gray-300  rounded-full p-1 cursor-pointer relative shadow-sm`}
+            onClick={() => {
+              toggleDarkMode();
+              setTheme(theme === "light" ? "dark" : "light");
+            }}
           >
-            Messages
-          </Link>
-          <Link
-            onClick={() =>
-              user
-                ? toast.success("Create new ad")
-                : toast.error("Please Login first")
-            }
-            to={user ? "/CreateAd" : "/UserLogin"}
-            className="mr-5 hover:text-gray-400"
-          >
-            Create Ad
-          </Link>
+            <div
+              className={` ${
+                theme === "light" ? "bg-zinc-100" : " bg-zinc-800"
+              } w-4 h-4 bg-white rounded-full shadow-md transform transition-transform ${
+                isDarkMode ? "translate-x-6" : "translate-x-0"
+              }`}
+            ></div>
+            {isDarkMode ? (
+              <FiMoon className="absolute top-1 left-1 text-zinc-800 dark:text-gray-200" />
+            ) : (
+              <FiSun className="absolute top-1 right-1 text-orange-700" />
+            )}
+          </div>
         </div>
       </div>
 
-      {/* login/signup profile section */}
-      <div className="flex flex-wrap items-center justify-center">
-        {!user ? (
-          // If user is not logged in, show SignUp and LogIn buttons
-
-          <>
-            <Link to="/UserSignup" className="mr-5 hover:text-gray-400">
-              SignUp
-            </Link>
-            <Link to="/UserLogin" className="mr-5 hover:text-gray-400">
-              LogIn
-            </Link>
-          </>
-        ) : (
-          // If user is logged in, show Logout and Profile button
-          <>
-            <button
-              onClick={() => {
-                const auth = getAuth();
-                signOut(auth)
-                  .then(() => {
-                    console.log("User logged out");
-                    navigate("/");
-                  })
-                  .catch((error) => {
-                    console.log("Error logging out: ", error);
-                  });
-              }}
-              className="mr-5 hover:text-gray-900"
-            >
-              Logout
-            </button>
-            <Link to="/Profile" className="mr-5 hover:text-gray-900">
-              <FaUser size={24} />
-            </Link>
-          </>
+      {/* Mobile Menu */}
+      {/* <div className="lg:hidden block">
+        <button
+          onClick={toggleMenu}
+          className="text-gray-700 dark:text-gray-300 focus:outline-none"
+        >
+          <i className="fas fa-bars"></i>
+        </button>
+        {isMenuOpen && (
+          <div className="bg-gray-100 dark:bg-gray-800 p-4">
+            <ul className="space-y-4">
+              <li>
+                <Link
+                  to="./Explore"
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900"
+                >
+                  Explore
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="Brands"
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900"
+                >
+                  Brands
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="./MyAds"
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900"
+                >
+                  My Ads
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="./Messages"
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900"
+                >
+                  Messages
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="./ContactUS"
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900"
+                >
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          </div>
         )}
-      </div>
-
-      {/* mode */}
-      <div
-        className={`${
-          theme === "dark" ? "bg-white text-black " : "bg-black text-white"
-        } w-10 flex justify-center pt-1 pb-1 pl-6 pr-6 shadow-md rounded`}
-      >
-        {/* sun */}
-        <button
-          className={` ${theme === "dark" ? "block" : "hidden"}`}
-          onClick={() => {
-            setTheme("light");
-          }}
-        >
-          <BsSun size={24} />
-        </button>
-
-        {/* moon */}
-        <button
-          className={` ${theme === "light" ? "block" : "hidden"}`}
-          onClick={() => {
-            setTheme("dark");
-          }}
-        >
-          <BsMoon size={24} />
-        </button>
-      </div>
-    </header>
+      </div> */}
+    </nav>
   );
 }
 

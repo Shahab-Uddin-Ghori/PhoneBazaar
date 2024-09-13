@@ -1,14 +1,15 @@
+// initilizing app
 import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  createUserWithEmailAndPassword, //for singup
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth";
+// analytics of app
+import { getAnalytics } from "firebase/analytics";
+// for authentication
+import { getAuth } from "firebase/auth";
+// for firestore save data doc..
+import { getFirestore } from "firebase/firestore";
+// of storage saving data like img..
+import { getStorage } from "firebase/storage";
 
+// api config
 const firebaseConfig = {
   apiKey: "AIzaSyDNXVDDQUynRno4srT08PIwDZEWZ9RyJKI",
   authDomain: "phonebazaarwala.firebaseapp.com",
@@ -22,16 +23,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-
-export {
-  auth,
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  provider,
-  onAuthStateChanged,
-  signOut,
-};
+const db = getFirestore(app);
+const storage = getStorage(app);
+const analytics = getAnalytics(app);
+export { app, auth, db, storage, analytics };
