@@ -60,7 +60,7 @@ function SlideShow() {
         </p>
       </div>
       {/* Slider Wrapper */}
-      <div className="videoContainer w-full flex justify-center items-center overflow-hidden  h-2/4 relative">
+      <div className="videoContainer w-full flex justify-center items-center overflow-hidden  h-2/4   ">
         <div
           className="flex transition-transform duration-500 ease-in-out w-full h-full"
           style={{
@@ -75,7 +75,7 @@ function SlideShow() {
               } h-full`}
             >
               <div className="card w-[95%] md:w-[80%] lg:w-[70%] h-full border shadow-md rounded-2xl overflow-hidden border-none outline-none">
-                <div className="imgContainer flex items-center justify-center w-full h-full overflow-hidden">
+                <div className="imgContainer flex items-center justify-center w-full h-full overflow-hidden relative">
                   <video
                     src={card.url}
                     ref={(el) => (videoRefs.current[index] = el)} // Store reference to each video
@@ -84,39 +84,41 @@ function SlideShow() {
                     muted
                     className="w-full h-full object-cover rounded-2xl" // Ensures video has rounded corners
                   />
+                  {/*  */}
+                  {/* Left Arrow */}
+                  <FaArrowLeft
+                    size={36}
+                    className="absolute left-12 top-[50%] translate-y-[-50%] text-zinc-50 z-20 hover:bg-orange-600 transition-all ease-linear hover:cursor-pointer hover:rounded-full p-2 "
+                    onClick={handlePrev}
+                  />
+
+                  {/* Right Arrow */}
+                  <FaArrowRight
+                    size={36}
+                    className="absolute right-12 top-[50%] translate-y-[-50%] text-zinc-50 z-20 hover:bg-orange-600 transition-all ease-linear hover:cursor-pointer hover:rounded-full p-2 "
+                    onClick={handleNext}
+                  />
+
+                  {/* Play/Pause Button */}
+                  {isPlaying ? (
+                    <BiPause
+                      size={44}
+                      className="absolute bottom-5 left-1/2 translate-x-[-50%] text-zinc-50 z-20 hover:bg-orange-600 transition-all ease-linear hover:cursor-pointer hover:rounded-full p-2 "
+                      onClick={togglePlayPause}
+                    />
+                  ) : (
+                    <BiPlay
+                      size={44}
+                      className="absolute bottom-5 left-1/2 translate-x-[-50%] text-zinc-50 z-20 hover:bg-orange-600 transition-all ease-linear hover:cursor-pointer hover:rounded-full p-2 "
+                      onClick={togglePlayPause}
+                    />
+                  )}
+                  {/*  */}
                 </div>
               </div>
             </div>
           ))}
         </div>
-        {/* Left Arrow */}
-        <FaArrowLeft
-          size={36}
-          className="absolute left-48 top-[50%] translate-y-[-50%] text-zinc-50 z-20 hover:bg-orange-600 transition-all ease-linear hover:cursor-pointer hover:rounded-full p-2 "
-          onClick={handlePrev}
-        />
-
-        {/* Right Arrow */}
-        <FaArrowRight
-          size={36}
-          className="absolute right-48 top-[50%] translate-y-[-50%] text-zinc-50 z-20 hover:bg-orange-600 transition-all ease-linear hover:cursor-pointer hover:rounded-full p-2 "
-          onClick={handleNext}
-        />
-
-        {/* Play/Pause Button */}
-        {isPlaying ? (
-          <BiPause
-            size={44}
-            className="absolute bottom-5 left-1/2 translate-x-[-50%] text-zinc-50 z-20 hover:bg-orange-600 transition-all ease-linear hover:cursor-pointer hover:rounded-full p-2 "
-            onClick={togglePlayPause}
-          />
-        ) : (
-          <BiPlay
-            size={44}
-            className="absolute bottom-5 left-1/2 translate-x-[-50%] text-zinc-50 z-20 hover:bg-orange-600 transition-all ease-linear hover:cursor-pointer hover:rounded-full p-2 "
-            onClick={togglePlayPause}
-          />
-        )}
       </div>
     </div>
   );
