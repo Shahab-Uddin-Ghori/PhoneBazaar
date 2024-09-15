@@ -16,6 +16,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        {/* <div className="max-w-full overflow-hidden min-h-screen flex flex-col"> */}
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -28,6 +29,7 @@ function App() {
           <Route path="/UserSignup" element={<UserSignup />} />
           <Route path="/Profile" element={<Profile />} />
         </Routes>
+        {/* </div> */}
       </BrowserRouter>
       <ToastContainer />
     </>

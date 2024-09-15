@@ -41,9 +41,9 @@ function Header() {
     <nav
       className={`${
         theme == "light"
-          ? "bg-gray-200 text-zinc-800"
-          : "bg-zinc-900 text-zinc-200"
-      }  shadow-md`}
+          ? "bg-gray-50 text-zinc-950"
+          : "bg-zinc-900 text-zinc-50"
+      }  shadow-md  h-24 `}
     >
       <div className="flex justify-between items-center ml-10">
         {/* Left Side: Logo and Links */}
@@ -133,7 +133,7 @@ function Header() {
               onClick={toggleMenu}
               className={`${
                 theme == " light" ? "text-zinc-800" : "text-zinc-100"
-              }" focus:outline-none"`}
+              }" focus:outline-none"  `}
             >
               <FaUserCircle size={25} className="mt-2" />
             </button>
@@ -187,7 +187,7 @@ function Header() {
 
           {/* Theme Toggle */}
           <div
-            className={`w-12 h-6 bg-gray-300  rounded-full p-1 cursor-pointer relative shadow-sm`}
+            className={`w-12 h-6 bg-gray-300  rounded-full p-1 cursor-pointer relative shadow-lg`}
             onClick={() => {
               toggleDarkMode();
               setTheme(theme === "light" ? "dark" : "light");
