@@ -47,12 +47,12 @@ function SlideShow() {
       className={`${
         theme == "light"
           ? "bg-zinc-50 text-zinc-800"
-          : "bg-slate-800 text-zinc-300"
+          : "bg-zinc-800 text-zinc-300"
       } max-w-full flex  flex-col  justify-center  h-[calc(100vh-6rem)]`}
     >
-      <div className="intro ml-10 mb-10 max-w-full">
+      <div className="intro ml-10 mr-10 mb-10 max-w-full">
         <h1 className="text-3xl mb-5">Welcome Phone Bazaar Wala</h1>
-        <p>
+        <p className="sm:w-3/4 md:3/4 w-full text-pretty ">
           Discover a seamless marketplace for new and used mobile phones. Buy
           from verified sellers or dealers, set your own prices, and enjoy
           secure, transparent transactions. Connect with local sellers and get

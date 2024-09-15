@@ -71,17 +71,13 @@ function UserSignup() {
       ) : (
         <section
           className={`${
-            theme == "light"
-              ? "bg-zinc-100 h-screen text-zinc-800"
-              : "bg-gray-800 h-screen text-zinc-500"
-          }""`}
+            theme == "light" ? "bg-zinc-50 h-screen " : "bg-zinc-800"
+          } min-h-[calc(100vh-6rem)]`}
         >
           <div
             className={`${
-              theme == "light"
-                ? "bg-zinc-100 h-screen text-zinc-800"
-                : "bg-gray-800 h-screen text-zinc-500"
-            } container h-full px-6 py-24`}
+              theme == "light" ? " text-zinc-800" : " text-zinc-300"
+            } container px-6 pt-24`}
           >
             <div className="flex h-full flex-wrap items-center justify-center lg:justify-between">
               {/*  */}
@@ -122,18 +118,18 @@ function UserSignup() {
                   </div>
 
                   {/* Email */}
-                  <div className="relative mb-6">
+                  <div className="relative mb-6 pt-2">
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="peer block  w-full rounded border-0 bg-transparent px-3 py-[0.02rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary border-zinc-300 border-b-2"
+                      className="peer block  w-full rounded border-0 bg-transparent px-3 pt-[0.3rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary border-zinc-300 border-b-2"
                       id="emailInput"
                       required
                     />
                     <label
                       htmlFor="emailInput"
-                      className="absolute left-3 -top-5 mb-0  text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.05rem] peer-focus:scale-[0.8] peer-focus:text-primary hover:cursor-pointer"
+                      className="absolute left-3 -top-2 mb-0  text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.05rem] peer-focus:scale-[0.8] peer-focus:text-primary hover:cursor-pointer"
                     >
                       Email address
                     </label>
@@ -141,7 +137,7 @@ function UserSignup() {
                   {/*  */}
 
                   {/* Password */}
-                  <div className="relative mb-6">
+                  <div className="relative mb-6 pt-1">
                     <input
                       type="password"
                       value={password}

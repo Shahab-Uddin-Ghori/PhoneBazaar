@@ -1,19 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
 // import { auth } from "../firebase";
-import { FiSearch, FiSun, FiMoon } from "react-icons/fi";
-import { FaUserCircle } from "react-icons/fa";
+import { FiSearch, FiSun, FiMoon, FiMenu, FiCrosshair } from "react-icons/fi";
+import { FaLine, FaUserCircle } from "react-icons/fa";
 import Logo from "../Images/Logo.png";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "./ModeThemeContext";
 import { UserContext } from "./UserContextProvider";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaModx, FaX } from "react-icons/fa6";
 
 function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [sidebar, setSideBar] = useState(false);
   const [theme, setTheme] = useContext(ThemeContext);
   const { user } = useContext(UserContext);
   // console.log(theme);
@@ -45,23 +47,139 @@ function Header() {
           : "bg-zinc-900 text-zinc-50"
       }  shadow-md  h-24 `}
     >
-      <div className="flex justify-between items-center ml-10">
+      <div className="flex justify-between items-center">
         {/* Left Side: Logo and Links */}
-        <div className="flex items-center space-x-5">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <img src={`${Logo}`} alt="Logo" className="w-24" />
-          </Link>
+        <div className="flex items-center justify-between ">
+          {/*  */}
+
+          {/* logo sideBar menu with links */}
+          <div className=" flex justify-between items-center flex-row gap-4 relative ml-5">
+            <FiMenu
+              size={24}
+              className=" lg:hidden block hover:cursor-pointer"
+              onClick={() => {
+                sidebar == true ? setSideBar(false) : setSideBar(true);
+              }}
+            />
+
+            {/*  */}
+            {sidebar && sidebar === true ? (
+              <div
+                className={` ${
+                  theme == "light" ? "bg-white" : "bg-zinc-900"
+                } sideBar w-52 h-56  z-10 absolute top-2 left-0 flex flex-col rounded-2xl shadow-lg transition ease-linear duration-700`}
+              >
+                {/*  */}
+
+                {/* top siderbar title and cross */}
+                <div className={`flex justify-between items-center p-2  `}>
+                  <Link
+                    to="/"
+                    className={`ml-1 text-sm ${
+                      theme == "light"
+                        ? "txt-zinc-800 hover:text-zinc-950"
+                        : "text-zinc-300 hover:text-orange-600"
+                    }`}
+                  >
+                    Phone Bazaar Wala
+                  </Link>
+                  <FaX
+                    size={12}
+                    className={` ${
+                      theme == "light"
+                        ? "text-zinc-800 hover:text-zinc-950"
+                        : "text-zinc-300 hover:text-orange-600"
+                    } hover:cursor-pointer`}
+                    onClick={() => {
+                      setSideBar(false);
+                    }}
+                  />
+                </div>
+                {/* Input  */}
+                <div className="relative lg:flex w-48 items-center justify-center mx-auto  ">
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    className={`${
+                      theme == "light"
+                        ? "bg-white text-zinc-700"
+                        : "bg-zinc-800 text-zinc-300 "
+                    } px-4 py-2 rounded-full border-none focus:outline-none shadow-sm w-48`}
+                  />
+                  <FiSearch className="absolute top-3 right-3 text-orange-700 dark:text-gray-400" />
+                </div>
+                {/* ul */}
+                <ul className={` flex flex-col mt-3 ml-5`}>
+                  <li
+                    className={`${
+                      theme == "light"
+                        ? "text-zinc-800 hover:text-zinc-950"
+                        : "text-zinc-300 hover:text-orange-600"
+                    }`}
+                  >
+                    <Link to="./Explore">Explore</Link>
+                  </li>
+                  {/* brands */}
+                  <li
+                    className={`${
+                      theme == "light"
+                        ? "text-zinc-800 hover:text-zinc-950"
+                        : "text-zinc-300 hover:text-orange-600"
+                    }`}
+                  >
+                    <Link to="./Brands">Brands</Link>
+                  </li>
+                  {/* My Ads */}
+                  <li
+                    className={`${
+                      theme == "light"
+                        ? "text-zinc-800 hover:text-zinc-950"
+                        : "text-zinc-300 hover:text-orange-600"
+                    }`}
+                  >
+                    <Link to="./MyAds">My Ads</Link>
+                  </li>
+                  {/* messages */}
+                  <li
+                    className={`${
+                      theme == "light"
+                        ? "text-zinc-800 hover:text-zinc-950"
+                        : "text-zinc-300 hover:text-orange-600"
+                    }`}
+                  >
+                    <Link to="./Messages">Messages</Link>
+                  </li>
+                  {/* contact us */}
+                  <li
+                    className={`${
+                      theme == "light"
+                        ? "text-zinc-800 hover:text-zinc-950"
+                        : "text-zinc-300 hover:text-orange-600"
+                    }`}
+                  >
+                    <Link to="./ContactUs">Contact us</Link>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <div className="sidebar none hidden"></div>
+            )}
+
+            {/* Logo */}
+            <Link to="/" className="flex items-center">
+              <img src={`${Logo}`} alt="Logo" className=" w-24 mt-2" />
+            </Link>
+          </div>
 
           {/* Links */}
 
           {/* explore */}
-          <ul className={` flex space-x-4`}>
+          <ul className={` space-x-4 hidden lg:flex`}>
             <li
               className={`${
                 theme == "light"
                   ? "text-zinc-700 hover:text-zinc-900"
-                  : "text-zinc-400 hover:text-orange-600"
+                  : "text-zinc-300 hover:text-orange-600"
               }`}
             >
               <Link to="./Explore">Explore</Link>
@@ -71,7 +189,7 @@ function Header() {
               className={`${
                 theme == "light"
                   ? "text-zinc-700 hover:text-zinc-900"
-                  : "text-zinc-400 hover:text-orange-600"
+                  : "text-zinc-300 hover:text-orange-600"
               }`}
             >
               <Link to="./Brands">Brands</Link>
@@ -81,7 +199,7 @@ function Header() {
               className={`${
                 theme == "light"
                   ? "text-zinc-700 hover:text-zinc-900"
-                  : "text-zinc-400 hover:text-orange-600"
+                  : "text-zinc-300 hover:text-orange-600"
               }`}
             >
               <Link to="./MyAds">My Ads</Link>
@@ -91,7 +209,7 @@ function Header() {
               className={`${
                 theme == "light"
                   ? "text-zinc-700 hover:text-zinc-900"
-                  : "text-zinc-400 hover:text-orange-600"
+                  : "text-zinc-300 hover:text-orange-600"
               }`}
             >
               <Link to="./Messages">Messages</Link>
@@ -101,7 +219,7 @@ function Header() {
               className={`${
                 theme == "light"
                   ? "text-zinc-700 hover:text-zinc-900"
-                  : "text-zinc-400 hover:text-orange-600"
+                  : "text-zinc-300 hover:text-orange-600"
               }`}
             >
               <Link to="./ContactUs">Contact us</Link>
@@ -112,9 +230,9 @@ function Header() {
         {/* Center: Empty */}
 
         {/* Right Side: Search, Profile, and Theme Toggle */}
-        <div className="flex items-center space-x-4 mr-10">
+        <div className="flex items-center space-x-4 mr-5">
           {/* Search Input */}
-          <div className="relative flex items-center justify-center">
+          <div className="relative lg:flex hidden items-center justify-center   ">
             <input
               type="text"
               placeholder="Search..."
@@ -122,13 +240,13 @@ function Header() {
                 theme == "light"
                   ? "bg-zinc-50 text-zinc-700"
                   : "bg-zinc-800 text-zinc-100 "
-              } px-4 py-2 rounded-full border-none focus:outline-none shadow-sm`}
+              } px-4 py-2 rounded-full border-none focus:outline-none shadow-sm `}
             />
             <FiSearch className="absolute top-3 right-3 text-orange-700 dark:text-gray-400" />
           </div>
 
           {/* Profile Dropdown */}
-          <div className="relative">
+          <div className="relative ">
             <button
               onClick={toggleMenu}
               className={`${
@@ -139,7 +257,7 @@ function Header() {
             </button>
 
             {isMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 shadow-lg py-2 rounded-lg">
+              <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-700 shadow-lg py-2 rounded-lg sm:w-48">
                 {!isLoggedIn ? (
                   <>
                     <Link

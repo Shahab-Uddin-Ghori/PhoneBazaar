@@ -49,13 +49,13 @@ const UserLogin = () => {
       {loading ? (
         <SpinnerLoader />
       ) : (
-        <section className="h-screen">
+        <section className="min-h-[calc(100vh-6rem)]">
           <div
             className={`${
               theme === "light"
-                ? "bg-zinc-100 text-zinc-700"
+                ? "bg-zinc-50 text-zinc-700"
                 : "bg-zinc-800 text-zinc-300"
-            } h-full p-5`}
+            } min-h-[calc(100vh-6rem)] p-5`}
           >
             <div className="flex h-full flex-wrap items-center justify-center lg:justify-between">
               {/* Left column */}
