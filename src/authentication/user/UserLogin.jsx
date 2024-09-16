@@ -55,9 +55,9 @@ const UserLogin = () => {
               theme === "light"
                 ? "bg-zinc-50 text-zinc-700"
                 : "bg-zinc-800 text-zinc-300"
-            } min-h-[calc(100vh-6rem)] p-5`}
+            } min-h-screen p-5`}
           >
-            <div className="flex h-full flex-wrap items-center justify-center lg:justify-between">
+            <div className="flex h-full flex-wrap items-center justify-center lg:justify-between mt-24">
               {/* Left column */}
               <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
                 <img

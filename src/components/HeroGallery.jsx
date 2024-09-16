@@ -10,20 +10,22 @@ const HeroGallery = () => {
         theme !== "light"
           ? "bg-zinc-800 text-zinc-300"
           : "bg-zinc-50 text-zinc-800"
-      } heroGaller w-full flex flex-col pl-4 sm:pl-10`}
+      } heroGaller max-w-full flex flex-col pl-4 sm:pl-10`}
     >
-      <h1 className="text-3xl sm:text-4xl font-bold mb-4">Today's Hot Deals</h1>
-      <p className="text-base sm:text-lg leading-relaxed mb-6">
+      <h1 className="text-3xl sm:text-4xl font-bold mb-6 pr-5">
+        Today's Hot Deals
+      </h1>
+      <p className="text-base sm:text-lg leading-relaxed  pr-5 text-pretty">
         Explore the latest mobile listings from local sellers and trusted
         dealers in your area. Whether you're looking for a budget-friendly phone
         or a premium model, today’s freshly listed deals offer unbeatable
         prices. Connect directly with sellers, compare options, and take
-        advantage of competitive pricing. Don’t miss out on the best offers—find
+        advantage of competitive pricing. Don’t miss out on the best offers find
         your perfect mobile at a great price today!
       </p>
 
-      <div className="container mx-auto px-2 sm:px-5 py-2 lg:px-32 lg:pt-8">
-        <div className="-m-1 flex flex-wrap md:-m-2">
+      <div className="container mx-auto pr-3 sm:px-5 py-4 lg:px-32 lg:pt-8">
+        <div className=" flex flex-wrap md:-m-2">
           <div className="flex w-full sm:w-[35%] flex-wrap">
             <div className="w-1/2 p-1 sm:p-2">
               <img
@@ -45,7 +47,7 @@ const HeroGallery = () => {
               <img
                 alt="iPhone 16 Pro Max smartphone design"
                 loading="lazy"
-                className="block h-full w-full rounded-md object-cover object-center overflow-hidden hover:scale-[103%] transition ease-linear duration-500"
+                className="block h-full w-full rounded-md object-cover object-center overflow-hidden hover:scale-[105%] transition ease-linear duration-500"
                 src="https://fdn.gsmarena.com/imgroot/news/24/09/what-to-expect-iphone-16pro-16promax/inline/-1200/gsmarena_002.jpg"
               />
             </div>
@@ -55,7 +57,7 @@ const HeroGallery = () => {
               <img
                 alt="Foldable phone design featuring an OPPO model"
                 loading="lazy"
-                className="block h-full w-full rounded-md object-cover object-center overflow-hidden hover:scale-[103%] transition ease-linear duration-500"
+                className="block h-full w-full rounded-md object-cover object-center overflow-hidden hover:scale-[105%] transition ease-linear duration-500"
                 src="https://helios-i.mashable.com/imagery/articles/00dc5AHOoMIxpbGPdFqCYfR/images-2.fill.size_2000x1125.v1723371839.jpg"
               />
             </div>

@@ -72,12 +72,12 @@ function UserSignup() {
         <section
           className={`${
             theme == "light" ? "bg-zinc-50 h-screen " : "bg-zinc-800"
-          } min-h-[calc(100vh-6rem)]`}
+          } min-h-screen`}
         >
           <div
             className={`${
               theme == "light" ? " text-zinc-800" : " text-zinc-300"
-            } container px-6 pt-24`}
+            } container px-6 pt-40 `}
           >
             <div className="flex h-full flex-wrap items-center justify-center lg:justify-between">
               {/*  */}

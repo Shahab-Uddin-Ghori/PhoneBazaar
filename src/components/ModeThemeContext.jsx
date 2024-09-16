@@ -2,7 +2,16 @@ import React, { createContext, useEffect, useState } from "react";
 export const ThemeContext = createContext();
 
 function ModeThemeContext({ children }) {
-  const [theme, setTheme] = useState("light");
+  // Initialize theme from localStorage if available, else use 'light'
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme ? JSON.parse(savedTheme) : "light";
+  });
+
+  // Save theme to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("theme", JSON.stringify(theme));
+  }, [theme]);
 
   return (
     <ThemeContext.Provider value={[theme, setTheme]}>
