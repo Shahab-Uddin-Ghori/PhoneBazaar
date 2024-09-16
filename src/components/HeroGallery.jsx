@@ -45,7 +45,7 @@ const HeroGallery = () => {
               <img
                 alt="iPhone 16 Pro Max smartphone design"
                 loading="lazy"
-                className="block h-full w-full rounded-md object-cover object-center overflow-hidden hover:scale-[105%] transition ease-linear duration-500"
+                className="block h-full w-full rounded-md object-cover object-center overflow-hidden hover:scale-[103%] transition ease-linear duration-500"
                 src="https://fdn.gsmarena.com/imgroot/news/24/09/what-to-expect-iphone-16pro-16promax/inline/-1200/gsmarena_002.jpg"
               />
             </div>
@@ -55,7 +55,7 @@ const HeroGallery = () => {
               <img
                 alt="Foldable phone design featuring an OPPO model"
                 loading="lazy"
-                className="block h-full w-full rounded-md object-cover object-center overflow-hidden hover:scale-[105%] transition ease-linear duration-500"
+                className="block h-full w-full rounded-md object-cover object-center overflow-hidden hover:scale-[103%] transition ease-linear duration-500"
                 src="https://helios-i.mashable.com/imagery/articles/00dc5AHOoMIxpbGPdFqCYfR/images-2.fill.size_2000x1125.v1723371839.jpg"
               />
             </div>
