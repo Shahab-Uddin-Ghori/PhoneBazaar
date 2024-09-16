@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { ThemeContext } from "./ModeThemeContext";
 import SlideShow from "./SlideShow";
+import HeroGallery from "./HeroGallery";
 
 function Home() {
   const [theme, setTheme] = useContext(ThemeContext);
@@ -12,6 +13,7 @@ function Home() {
       } flex flex-col w-full min-h-[calc(100vh-6rem)]`}
     >
       <SlideShow />
+      <HeroGallery />
     </div>
   );
 }

@@ -48,7 +48,7 @@ function SlideShow() {
         theme == "light"
           ? "bg-zinc-50 text-zinc-800"
           : "bg-zinc-800 text-zinc-300"
-      } max-w-full flex  flex-col  justify-center  h-[calc(100vh-6rem)]`}
+      } max-w-full flex  flex-col  justify-center  h-[calc(100vh-6rem)] mt-24`}
     >
       <div className="intro ml-10 mr-10 mb-10 max-w-full ">
         <h1 className="text-3xl mb-5">Welcome Phone Bazaar Wala</h1>
