@@ -50,7 +50,7 @@ function SlideShow() {
           : "bg-zinc-800 text-zinc-300"
       } max-w-full flex  flex-col  justify-center  h-[calc(100vh-6rem)]`}
     >
-      <div className="intro ml-10 mr-10 mb-10 max-w-full">
+      <div className="intro ml-10 mr-10 mb-10 max-w-full ">
         <h1 className="text-3xl mb-5">Welcome Phone Bazaar Wala</h1>
         <p className="sm:w-3/4 md:3/4 w-full text-pretty ">
           Discover a seamless marketplace for new and used mobile phones. Buy
@@ -60,11 +60,11 @@ function SlideShow() {
         </p>
       </div>
       {/* Slider Wrapper */}
-      <div className="videoContainer w-full flex justify-center items-center overflow-hidden  h-2/4   ">
+      <div className="videoContainer w-full flex justify-between items-center overflow-hidden  h-2/4 lg:h-3/5 ">
         <div
-          className="flex transition-transform duration-500 ease-in-out w-full h-full"
+          className="flex transition-transform duration-500 ease-in-out w-full h-full "
           style={{
-            transform: `translateX(-${activeIndex * 100}%)`,
+            transform: `translateX(-${activeIndex * 100}%) `,
           }}
         >
           {sliderObj.map((card, index) => (
@@ -72,9 +72,9 @@ function SlideShow() {
               key={index}
               className={`min-w-full flex-shrink-0 flex justify-center items-center transition-transform ${
                 index === activeIndex ? "scale-100" : "scale-75 opacity-50"
-              } h-full`}
+              } h-full `}
             >
-              <div className="card w-[95%] md:w-[80%] lg:w-[70%] h-full border shadow-md rounded-2xl overflow-hidden border-none outline-none">
+              <div className="card w-64 h-56 md:w-[60%] sm:w-[60%] sm:h-full md:h-full lg:h-full  border shadow-md rounded-2xl overflow-hidden border-none outline-none ">
                 <div className="imgContainer flex items-center justify-center w-full h-full overflow-hidden relative">
                   <video
                     src={card.url}
@@ -82,20 +82,20 @@ function SlideShow() {
                     autoPlay={false} // Remove autoplay for manual control
                     loop
                     muted
-                    className="w-full h-full object-cover rounded-2xl" // Ensures video has rounded corners
+                    className="w-full h-full object-cover rounded-2xl"
                   />
                   {/*  */}
                   {/* Left Arrow */}
                   <FaArrowLeft
                     size={36}
-                    className="absolute left-12 top-[50%] translate-y-[-50%] text-zinc-50 z-20 hover:bg-orange-600 transition-all ease-linear hover:cursor-pointer hover:rounded-full p-2 "
+                    className="absolute left-5 sm:left-12 top-[50%] translate-y-[-50%] text-zinc-50 z-20 hover:bg-orange-600 transition-all ease-linear hover:cursor-pointer hover:rounded-full p-2 "
                     onClick={handlePrev}
                   />
 
                   {/* Right Arrow */}
                   <FaArrowRight
                     size={36}
-                    className="absolute right-12 top-[50%] translate-y-[-50%] text-zinc-50 z-20 hover:bg-orange-600 transition-all ease-linear hover:cursor-pointer hover:rounded-full p-2 "
+                    className="absolute right-5 sm:right-12 top-[50%] translate-y-[-50%] text-zinc-50 z-20 hover:bg-orange-600 transition-all ease-linear hover:cursor-pointer hover:rounded-full p-2 "
                     onClick={handleNext}
                   />
 
