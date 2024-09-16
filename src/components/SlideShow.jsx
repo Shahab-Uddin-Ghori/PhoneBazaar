@@ -51,7 +51,7 @@ function SlideShow() {
       } max-w-full flex  flex-col  justify-center  h-[calc(100vh-6rem)] mt-24`}
     >
       <div className="intro ml-10 mr-10 mb-10 max-w-full ">
-        <h1 className="text-3xl mb-5">Welcome Phone Bazaar Wala</h1>
+        <h1 className="mb-5 text-4xl font-bold">Welcome Phone Bazaar Wala</h1>
         <p className="sm:w-3/4 md:3/4 w-full text-pretty ">
           Discover a seamless marketplace for new and used mobile phones. Buy
           from verified sellers or dealers, set your own prices, and enjoy
