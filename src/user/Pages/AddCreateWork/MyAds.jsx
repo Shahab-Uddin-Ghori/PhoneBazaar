@@ -42,14 +42,14 @@ function MyAds() {
             : "bg-zinc-50 text-zinc-800"
         } max-w-ful h-12 mx-auto mt-10 flex justify-center items-center relative overflow-hidden`}
       >
-        {/* Heading on Top */}
+        {/* Manage Your Ads */}
         <Link
           to="/ManageMyAds"
           className={`${
             theme == "light"
-              ? "bg-zinc-800 text-zinc-300"
-              : "bg-zinc-50 text-zinc-700"
-          } text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl w-40 sm:w-48 md:w-56 lg:w-64 text-center absolute z-10 rounded-lg box-shad`}
+              ? "bg-zinc-800 text-zinc-300 hover:text-orange-600"
+              : "bg-zinc-50 text-zinc-700 hover:text-zinc-900"
+          } text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl   w-40 sm:w-48 md:w-56 lg:w-64 text-center absolute z-10 rounded-lg box-shad`}
           style={{
             opacity: 0.95,
             filter: "blur(0.05px)", // Slight blur effect
@@ -58,7 +58,7 @@ function MyAds() {
           My Ads
         </Link>
 
-        {/* Wrapper for Continuous Scrolling */}
+        {/* manage ad para */}
         <div className="flex absolute w-full h-full justify-start items-center animate-marquee">
           <p className="whitespace-nowrap px-4" style={{ marginRight: "50px" }}>
             Manage your ads effortlessly with Phone Bazaar! Easily edit, update,
@@ -79,23 +79,8 @@ function MyAds() {
             place for a smooth selling experience!
           </p>
         </div>
-
-        {/* Animation Styles */}
-        <style>{`
-          @keyframes marquee {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-100%);
-            }
-          }
-
-          .animate-marquee {
-            animation: marquee 20s linear infinite;
-          }
-        `}</style>
       </div>
+
       {/* Create New Ad Header */}
       <h1
         className={`${
@@ -118,8 +103,8 @@ function MyAds() {
           to="/CreateNewAd"
           className={`${
             theme == "light"
-              ? "bg-zinc-800 text-zinc-300"
-              : "bg-zinc-50 text-zinc-700"
+              ? "bg-zinc-800 text-zinc-300 hover:text-orange-600"
+              : "bg-zinc-50 text-zinc-700 hover:text-zinc-900"
           } text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl w-40 sm:w-48 md:w-56 lg:w-64 text-center absolute z-10 rounded-lg box-shad`}
           style={{
             opacity: 0.95,
