@@ -9,7 +9,7 @@ function Home() {
   return (
     <div
       className={`${
-        theme == "light" ? "bg-zinc-50" : "bg-gray-800"
+        theme == "light" ? "bg-zinc-50" : "bg-zinc-800"
       } flex flex-col w-full min-h-[calc(100vh-6rem)]`}
     >
       <SlideShow />

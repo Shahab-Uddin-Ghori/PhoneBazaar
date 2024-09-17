@@ -37,7 +37,7 @@ function MyAds() {
         className={`${
           theme === "light" ? "text-zinc-800" : "text-zinc-300"
         } text-2xl font-bold mt-36 ml-5 md: sm:text-4xl ${
-          !bgImg ? "text-white" : "text-sky-100"
+          !bgImg ? "text-white" : "text-orange-200"
         }`}
       >
         Manage your Ads
@@ -69,7 +69,7 @@ function MyAds() {
           } text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl   w-40 sm:w-48 md:w-56 lg:w-64 text-center absolute z-10 rounded-lg box-shad`}
           style={{
             opacity: 0.95,
-            filter: "blur(0.05px)", // Slight blur effect
+            filter: "blur(0.05px)",
           }}
         >
           My Ads
@@ -103,7 +103,7 @@ function MyAds() {
         className={`${
           theme === "light" ? "text-zinc-800" : "text-zinc-300"
         } text-2xl font-bold mt-36 ml-5 md: sm:text-4xl ${
-          !bgImg ? "text-white" : "text-sky-100"
+          !bgImg ? "text-white" : "text-orange-200"
         }`}
       >
         Create New Ad

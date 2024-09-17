@@ -42,7 +42,7 @@ function Header() {
   return (
     <nav
       className={`${
-        theme == "light"
+        theme === "light"
           ? "bg-gray-50 text-zinc-950"
           : "bg-zinc-900 text-zinc-50"
       }  shadow-md  h-24 w-full fixed z-50 backdrop-blur-lg `}
@@ -321,67 +321,11 @@ function Header() {
             {isDarkMode ? (
               <FiMoon className="absolute top-1 left-1 text-zinc-800 dark:text-gray-200" />
             ) : (
-              <FiSun className="absolute top-1 right-1 text-orange-700" />
+              <FiSun className="absolute top-1 right-1 text-orange-600" />
             )}
           </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {/* <div className="lg:hidden block">
-        <button
-          onClick={toggleMenu}
-          className="text-gray-700 dark:text-gray-300 focus:outline-none"
-        >
-          <i className="fas fa-bars"></i>
-        </button>
-        {isMenuOpen && (
-          <div className="bg-gray-100 dark:bg-gray-800 p-4">
-            <ul className="space-y-4">
-              <li>
-                <Link
-                  to="./Explore"
-                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900"
-                >
-                  Explore
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="Brands"
-                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900"
-                >
-                  Brands
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="./MyAds"
-                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900"
-                >
-                  My Ads
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="./Messages"
-                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900"
-                >
-                  Messages
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="./ContactUS"
-                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900"
-                >
-                  Contact Us
-                </Link>
-              </li>
-            </ul>
-          </div>
-        )}
-      </div> */}
     </nav>
   );
 }
