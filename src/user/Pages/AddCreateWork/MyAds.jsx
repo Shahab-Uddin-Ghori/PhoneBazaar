@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../components/UserContextProvider";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 function MyAds() {
   const { user } = useContext(UserContext);
   const [theme] = useContext(ThemeContext);
+  const [bgImg, setBgImg] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,17 +20,25 @@ function MyAds() {
 
   return (
     <div
-      className={`${
+      style={{
+        backgroundImage: `url(${bgImg}) `,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+      className={`MyAds ${
         theme === "light"
           ? "bg-zinc-50 text-zinc-800"
           : "bg-zinc-800 text-zinc-300"
-      } w-full min-h-screen`}
+      } w-full min-h-screen `}
     >
       {/* Create New Ad Header */}
       <h1
         className={`${
           theme === "light" ? "text-zinc-800" : "text-zinc-300"
-        } text-2xl font-bold mt-36 ml-5 md: sm:text-4xl`}
+        } text-2xl font-bold mt-36 ml-5 md: sm:text-4xl ${
+          !bgImg ? "text-white" : "text-sky-100"
+        }`}
       >
         Manage your Ads
       </h1>
@@ -44,6 +53,14 @@ function MyAds() {
       >
         {/* Manage Your Ads */}
         <Link
+          onMouseOver={() => {
+            setBgImg(
+              `https://supplyant.com/wp-content/uploads/2020/09/mobile-advertising.png`
+            );
+          }}
+          onMouseOut={() => {
+            setBgImg(false);
+          }}
           to="/ManageMyAds"
           className={`${
             theme == "light"
@@ -85,7 +102,9 @@ function MyAds() {
       <h1
         className={`${
           theme === "light" ? "text-zinc-800" : "text-zinc-300"
-        } text-2xl font-bold mt-36 ml-5 md: sm:text-4xl`}
+        } text-2xl font-bold mt-36 ml-5 md: sm:text-4xl ${
+          !bgImg ? "text-white" : "text-sky-100"
+        }`}
       >
         Create New Ad
       </h1>
@@ -100,12 +119,20 @@ function MyAds() {
       >
         {/* Heading on Top */}
         <Link
+          onMouseOver={() => {
+            setBgImg(
+              `https://techreport.com/wp-content/uploads/2023/10/Google-Display-Network.webp`
+            );
+          }}
+          onMouseOut={() => {
+            setBgImg(false);
+          }}
           to="/CreateNewAd"
           className={`${
             theme == "light"
               ? "bg-zinc-800 text-zinc-300 hover:text-orange-600"
               : "bg-zinc-50 text-zinc-700 hover:text-zinc-900"
-          } text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl w-40 sm:w-48 md:w-56 lg:w-64 text-center absolute z-10 rounded-lg box-shad`}
+          } text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl w-40 sm:w-48 md:w-56 lg:w-64 text-center absolute z-10 rounded-lg box-shad `}
           style={{
             opacity: 0.95,
             filter: "blur(0.05px)", // Slight blur effect
