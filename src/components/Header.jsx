@@ -45,7 +45,7 @@ function Header() {
         theme == "light"
           ? "bg-gray-50 text-zinc-950"
           : "bg-zinc-900 text-zinc-50"
-      }  shadow-md  h-24 w-full fixed z-50 backdrop-blur-lg  fixed`}
+      }  shadow-md  h-24 w-full fixed z-50 backdrop-blur-lg `}
     >
       <div className="flex justify-between items-center">
         {/* Left Side: Logo and Links */}
