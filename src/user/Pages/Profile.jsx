@@ -117,6 +117,7 @@ function Profile() {
                     <input
                       type="file"
                       id="fileInput"
+                      accept="image/*"
                       hidden
                       onChange={handeUpdateUserImage}
                     />

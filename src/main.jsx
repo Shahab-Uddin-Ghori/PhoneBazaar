@@ -4,13 +4,16 @@ import App from "./App.jsx";
 import "./index.css";
 import ModeThemeContext from "./components/ModeThemeContext.jsx";
 import UserContextProvider from "./components/UserContextProvider.jsx";
+import { AdProvider } from "./components/Adprovider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <UserContextProvider>
-      <ModeThemeContext>
-        <App />
-      </ModeThemeContext>
+      <AdProvider>
+        <ModeThemeContext>
+          <App />
+        </ModeThemeContext>
+      </AdProvider>
     </UserContextProvider>
   </StrictMode>
 );

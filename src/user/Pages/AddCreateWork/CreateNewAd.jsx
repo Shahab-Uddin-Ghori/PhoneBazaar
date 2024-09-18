@@ -1,50 +1,87 @@
 import React, { useContext, useState } from "react";
 import { FaUserEdit } from "react-icons/fa";
 import { ThemeContext } from "../../../components/ModeThemeContext";
+import { AdContext } from "../../../components/Adprovider";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import { tr } from "date-fns/locale";
 
 function CreateNewAd() {
-  const [theme, setTheme] = useContext(ThemeContext);
-  console.log(theme);
+  const navigate = useNavigate();
+  const [theme] = useContext(ThemeContext);
+  const [imageFile, setImageFile] = useState(null);
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [brand, setBrand] = useState("");
+  const [condition, setCondition] = useState("");
+  const [repaired, setRepaired] = useState("");
+  const [description, setDescription] = useState("");
+  const { setAdData } = useContext(AdContext); // Use AdContext to save ad data
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const [imageUrl, setImageUrl] = useState("");
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    try {
+      const imagePreviewUrl = URL.createObjectURL(imageFile);
+
+      // Save ad data
+      setAdData({
+        imageFile: imagePreviewUrl,
+        title,
+        price,
+        brand,
+        condition,
+        repaired,
+        description,
+      });
+
+      toast.success("Ad Under Preview");
+      setShowConfirmation(true);
+      setImageFile(null);
+      e.target.reset();
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
     <div
       className={`${
-        theme == "light"
+        theme === "light"
           ? "bg-zinc-50 text-zinc-800"
           : "bg-zinc-800 text-zinc-300"
       } flex flex-col w-full min-h-[calc(100vh-6rem)] p-5 mt-20`}
     >
-      {/* Heading should now be visible */}
       <h1 className="text-3xl font-bold mb-8 mt-5">Create Your Ad</h1>
 
       <div className={` container w-full flex justify-center items-center`}>
         <form
-          className={`flex flex-col sm:w-[50%] w-[100%]  shadow-lg rounded-lg p-5 ${
-            theme == "light"
+          className={`flex flex-col sm:w-[50%] w-[100%] shadow-lg rounded-lg p-5 ${
+            theme === "light"
               ? "bg-zinc-50 text-zinc-900"
               : "bg-zinc-900 shadow-xl"
           }`}
           onSubmit={handleSubmit}
         >
-          {/* Image Upload */}
-          <div className="w-full h-64  rounded-lg overflow-hidden mb-5">
+          <div className="w-full h-64 rounded-lg overflow-hidden mb-5">
             <label
               htmlFor="fileInput"
               className="w-full h-full flex justify-center items-center hover:cursor-pointer"
             >
-              {imageUrl ? (
+              {imageFile ? (
                 <img
                   className="object-cover w-full h-full"
                   src={
-                    typeof imageUrl === "string"
-                      ? imageUrl
-                      : URL.createObjectURL(imageUrl)
+                    typeof imageFile === "string"
+                      ? imageFile
+                      : URL.createObjectURL(imageFile)
                   }
                   alt="Ad Image"
                 />
@@ -56,7 +93,8 @@ function CreateNewAd() {
               type="file"
               id="fileInput"
               hidden
-              onChange={(e) => setImageUrl(e.target.files[0])}
+              accept="image/*"
+              onChange={handleImageChange}
             />
           </div>
 
@@ -73,6 +111,8 @@ function CreateNewAd() {
                   theme === "light" ? "border-gray-300" : "border-zinc-600"
                 } rounded-lg bg-transparent`}
                 placeholder="Ad title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
               />
             </div>
             <div className="w-full sm:w-[48%]">
@@ -86,6 +126,8 @@ function CreateNewAd() {
                   theme === "light" ? "border-gray-300" : "border-zinc-600"
                 } rounded-lg bg-transparent`}
                 placeholder="Price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
               />
             </div>
           </div>
@@ -104,6 +146,7 @@ function CreateNewAd() {
                     : "border-zinc-800 text-zinc-700"
                 } rounded-lg bg-transparent outline-none border-none`}
                 defaultValue="" // Correct way to set default
+                onChange={(e) => setBrand(e.target.value)}
               >
                 <option value="" disabled>
                   Select Brand
@@ -131,6 +174,8 @@ function CreateNewAd() {
                   theme === "light" ? "border-gray-300" : "border-zinc-600"
                 } rounded-lg bg-transparent`}
                 placeholder="New or Used"
+                value={condition}
+                onChange={(e) => setCondition(e.target.value)}
               />
             </div>
           </div>
@@ -148,6 +193,8 @@ function CreateNewAd() {
                     name="repaired"
                     value="yes"
                     className="form-radio"
+                    checked={repaired === "yes"}
+                    onChange={() => setRepaired("yes")}
                   />
                   <span className="ml-2">Yes</span>
                 </label>
@@ -157,6 +204,8 @@ function CreateNewAd() {
                     name="repaired"
                     value="no"
                     className="form-radio"
+                    checked={repaired === "no"}
+                    onChange={() => setRepaired("no")}
                   />
                   <span className="ml-2">No</span>
                 </label>
@@ -176,6 +225,8 @@ function CreateNewAd() {
               } rounded-lg bg-transparent`}
               placeholder="Add details about your phone"
               rows={4}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
 
@@ -194,6 +245,27 @@ function CreateNewAd() {
           </div>
         </form>
       </div>
+
+      {/* ad underView */}
+      {showConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+          <div className="bg-white p-8 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold mb-4">
+              Ad Submitted Successfully
+            </h2>
+            <p>Your ad has been submitted and is now under review.</p>
+            <button
+              onClick={() => {
+                setShowConfirmation(false);
+                navigate("/ManageMyAds");
+              }}
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
