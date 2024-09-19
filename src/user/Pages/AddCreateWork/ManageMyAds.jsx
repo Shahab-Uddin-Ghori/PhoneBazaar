@@ -15,7 +15,7 @@ function ManageMyAds() {
       } min-h-screen p-5  mt-24`}
     >
       <h1 className="text-2xl font-bold mb-6 ">My Ads</h1>
-      <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4`}>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4`}>
         {ads.length > 0 ? (
           ads.map((ad, index) => (
             <div
@@ -27,7 +27,7 @@ function ManageMyAds() {
               }  border-none outline-none rounded-lg shadow-md overflow-hidden w-full max-w-xs`}
             >
               {/* Image Section */}
-              <div className="h-40 overflow-hidden">
+              <div className="h-48 overflow-hidden">
                 <img
                   src={ad.imageFile}
                   alt={ad.title}

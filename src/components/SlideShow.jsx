@@ -74,7 +74,7 @@ function SlideShow() {
                 index === activeIndex ? "scale-100" : "scale-75 opacity-50"
               } h-full `}
             >
-              <div className="card w-64 h-56 md:w-[60%] sm:w-[60%] sm:h-full md:h-full lg:h-full  border shadow-md rounded-2xl overflow-hidden border-none outline-none ">
+              <div className="card w-100 h-56 md:w-[100%] sm:w-[100%] sm:h-full md:h-full lg:h-full  border shadow-md  overflow-hidden border-none outline-none ">
                 <div className="imgContainer flex items-center justify-center w-full h-full overflow-hidden relative">
                   <video
                     src={card.url}
@@ -82,7 +82,7 @@ function SlideShow() {
                     autoPlay={false} // Remove autoplay for manual control
                     loop
                     muted
-                    className="w-full h-full object-cover rounded-2xl"
+                    className="w-full h-full object-cover "
                   />
                   {/*  */}
                   {/* Left Arrow */}
