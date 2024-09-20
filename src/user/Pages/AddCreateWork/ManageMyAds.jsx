@@ -12,7 +12,7 @@ function ManageMyAds() {
         theme == "light"
           ? "bg-zinc-50 text-zinc-800"
           : "bg-zinc-800 text-zinc-300"
-      } min-h-screen p-5  mt-24`}
+      } min-h-[calc(100vh-6rem)] p-5 mt-24  `}
     >
       <h1 className="text-2xl font-bold mb-6 ">My Ads</h1>
       <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4`}>
@@ -24,14 +24,14 @@ function ManageMyAds() {
                 theme == "light"
                   ? "bg-zinc-50 text-zinc-800"
                   : "bg-zinc-900 text-zinc-300"
-              }  border-none outline-none rounded-lg shadow-md overflow-hidden w-full max-w-xs`}
+              }  border-none outline-none rounded-lg shadow-md overflow-hidden w-full max-w-md`}
             >
               {/* Image Section */}
-              <div className="h-48 overflow-hidden">
+              <div className="h-48 overflow-hidden object-contain object-center">
                 <img
                   src={ad.imageFile}
                   alt={ad.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-56 object-cover "
                 />
               </div>
 
@@ -41,7 +41,10 @@ function ManageMyAds() {
                   theme === "light" ? "text-zinc-800" : "text-zinc-300"
                 } p-3`}
               >
-                <h2 className="text-lg font-semibold mb-2">{ad.title}</h2>
+                <div className="titleAndTime flex justify-between items-center">
+                  <h2 className="text-lg font-semibold mb-2">{ad.title}</h2>
+                  <h2 className="text-lg font-semibold mb-2">{ad.timestamp}</h2>
+                </div>
                 <p className="text-md font-bold text-orange-600 mb-1">
                   ${ad.price}
                 </p>

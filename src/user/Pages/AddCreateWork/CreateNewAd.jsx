@@ -20,27 +20,33 @@ function CreateNewAd() {
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleImageChange = (e) => {
+    e.preventDefault();
     const file = e.target.files[0];
     if (file) {
       setImageFile(file);
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const imagePreviewUrl = URL.createObjectURL(imageFile);
+      if (!imageFile) {
+        toast.error("Please select an image file.");
+        return;
+      }
 
       // Save ad data
-      setAdData({
-        imageFile: imagePreviewUrl,
+      await setAdData({
+        imageFile,
         title,
         price,
         brand,
         condition,
         repaired,
         description,
+        timestamp: new Date(Date.now()).toLocaleString(),
       });
+      console.log(setAdData.imageFile);
 
       toast.success("Ad Under Preview");
       setShowConfirmation(true);
