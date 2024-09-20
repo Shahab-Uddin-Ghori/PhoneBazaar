@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { AdContext } from "../../../components/Adprovider";
 import { ThemeContext } from "../../../components/ModeThemeContext";
+import { useLocation } from "react-router";
 
-function ManageMyAds() {
+function ManageMyAds({ text = "My Ads" }) {
   const { ads } = useContext(AdContext);
   const [theme, setTheme] = useContext(ThemeContext);
+  const location = useLocation();
 
   return (
     <div
@@ -14,7 +16,7 @@ function ManageMyAds() {
           : "bg-zinc-800 text-zinc-300"
       } min-h-[calc(100vh-6rem)] p-5 mt-24  `}
     >
-      <h1 className="text-2xl font-bold mb-6 ">My Ads</h1>
+      <h1 className="text-2xl font-bold mb-6 ">{text}</h1>
       <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4`}>
         {ads.length > 0 ? (
           ads.map((ad, index) => (
@@ -55,6 +57,12 @@ function ManageMyAds() {
                   <strong>Condition:</strong> {ad.condition}
                 </p>
                 <p className="text-sm  mb-1">
+                  <strong>Location:</strong> {ad.location}
+                </p>
+                <p className="text-sm  mb-1">
+                  <strong>Contact Num:</strong> {ad.contact}
+                </p>
+                <p className="text-sm  mb-1">
                   <strong>Repaired:</strong>{" "}
                   {ad.repaired === "yes" ? "Yes" : "No"}
                 </p>
@@ -67,16 +75,34 @@ function ManageMyAds() {
                   {ad.description}
                 </p>
 
-                {/* Action Button */}
-                <button
-                  className={`${
-                    theme === "light"
-                      ? "bg-zinc-900 text-zinc-300"
-                      : "bg-orange-600 text-zinc-300"
-                  } w-full  py-2 rounded-md font-semibold hover:opacity-95 transition`}
-                >
-                  Edit Ad
-                </button>
+                {/* Message and Edit Ad.. */}
+                <div className="flex flex-col gap-5">
+                  {/* Message */}
+                  {location.pathname === "/Explore" ? (
+                    <button
+                      className={`${
+                        theme === "light"
+                          ? "bg-zinc-900 text-zinc-300"
+                          : "bg-orange-600 text-zinc-300"
+                      } w-full py-2 rounded-md font-semibold hover:opacity-95 transition`}
+                    >
+                      Message
+                    </button>
+                  ) : null}
+
+                  {/* Action Button */}
+                  {location.pathname === "/ManageMyAds" ? (
+                    <button
+                      className={`${
+                        theme === "light"
+                          ? "bg-zinc-900 text-zinc-300"
+                          : "bg-orange-600 text-zinc-300"
+                      } w-full  py-2 rounded-md font-semibold hover:opacity-95 transition`}
+                    >
+                      Edit Ad
+                    </button>
+                  ) : null}
+                </div>
               </div>
             </div>
           ))

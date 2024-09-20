@@ -14,6 +14,8 @@ function CreateNewAd() {
   const [price, setPrice] = useState("");
   const [brand, setBrand] = useState("");
   const [condition, setCondition] = useState("");
+  const [location, setLocation] = useState("");
+  const [contact, setContact] = useState("");
   const [repaired, setRepaired] = useState("");
   const [description, setDescription] = useState("");
   const { setAdData } = useContext(AdContext); // Use AdContext to save ad data
@@ -43,10 +45,11 @@ function CreateNewAd() {
         brand,
         condition,
         repaired,
+        location,
+        contact,
         description,
         timestamp: new Date(Date.now()).toLocaleString(),
       });
-      console.log(setAdData.imageFile);
 
       toast.success("Ad Under Preview");
       setShowConfirmation(true);
@@ -140,6 +143,7 @@ function CreateNewAd() {
 
           {/* Brand and Condition */}
           <div className="flex flex-col sm:flex-row justify-between mb-5">
+            {/* brands */}
             <div className="w-full sm:w-[48%] mb-4 sm:mb-0">
               <label htmlFor="brands" className="block mb-1 font-medium">
                 Brand
@@ -150,7 +154,7 @@ function CreateNewAd() {
                   theme === "light"
                     ? "border-gray-50 text-zinc-700"
                     : "border-zinc-800 text-zinc-700"
-                } rounded-lg bg-transparent outline-none border-none`}
+                } rounded-lg bg-transparent`}
                 defaultValue="" // Correct way to set default
                 onChange={(e) => setBrand(e.target.value)}
               >
@@ -169,19 +173,64 @@ function CreateNewAd() {
                 <option value="Motorola">Motorola</option>
               </select>
             </div>
-            <div className="w-full sm:w-[48%]">
+
+            {/* condition */}
+            <div className="w-full sm:w-[48%] mb-4 sm:mb-0">
               <label htmlFor="condition" className="block mb-1 font-medium">
                 Condition
               </label>
+              <select
+                id="condition"
+                className={`w-full p-2 border ${
+                  theme === "light"
+                    ? "border-gray-50 text-zinc-700"
+                    : "border-zinc-800 text-zinc-700"
+                } rounded-lg bg-transparent`}
+                defaultValue="" // Correct way to set default
+                onChange={(e) => setCondition(e.target.value)}
+              >
+                <option value="" disabled>
+                  Phone condition
+                </option>
+                <option value="new">New</option>
+                <option value="used">Used</option>
+              </select>
+            </div>
+          </div>
+          {/*  */}
+
+          {/* location and contact */}
+          <div className="flex flex-col sm:flex-row justify-between mb-5">
+            {/* Location */}
+            <div className="w-full sm:w-[48%]">
+              <label htmlFor="location" className="block mb-1 font-medium">
+                Location
+              </label>
               <input
                 type="text"
-                id="condition"
+                id="location"
                 className={`w-full p-2 border ${
                   theme === "light" ? "border-gray-300" : "border-zinc-600"
                 } rounded-lg bg-transparent`}
-                placeholder="New or Used"
-                value={condition}
-                onChange={(e) => setCondition(e.target.value)}
+                placeholder="Set your location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+            </div>
+            {/* contact */}
+            <div className="w-full sm:w-[48%]">
+              <label htmlFor="contact" className="block mb-1 font-medium">
+                Contact Num
+              </label>
+              <input
+                type="text"
+                id="contact"
+                className={`w-full p-2 border ${
+                  theme === "light" ? "border-gray-300" : "border-zinc-600"
+                } rounded-lg bg-transparent`}
+                placeholder="Contact number"
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
               />
             </div>
           </div>
