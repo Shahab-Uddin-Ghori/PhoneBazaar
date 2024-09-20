@@ -1,12 +1,24 @@
 import React, { useContext } from "react";
 import { AdContext } from "../../../components/Adprovider";
 import { ThemeContext } from "../../../components/ModeThemeContext";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { UserContext } from "../../../components/UserContextProvider";
 
 function ManageMyAds({ text = "My Ads" }) {
   const { ads } = useContext(AdContext);
   const [theme, setTheme] = useContext(ThemeContext);
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
   const location = useLocation();
+
+  // console.log(user.email);
+
+  const checkdata = ads.forEach((ad) => {
+    console.log(ad.email);
+    if (user.email == ad.email) {
+      console.log("kam huwa email ad wali or user wali");
+    }
+  });
 
   return (
     <div
@@ -80,6 +92,7 @@ function ManageMyAds({ text = "My Ads" }) {
                   {/* Message */}
                   {location.pathname === "/Explore" ? (
                     <button
+                      onClick={() => navigate("/Messages")}
                       className={`${
                         theme === "light"
                           ? "bg-zinc-900 text-zinc-300"
@@ -93,6 +106,7 @@ function ManageMyAds({ text = "My Ads" }) {
                   {/* Action Button */}
                   {location.pathname === "/ManageMyAds" ? (
                     <button
+                      onClick={() => navigate("/CreateNewAd")}
                       className={`${
                         theme === "light"
                           ? "bg-zinc-900 text-zinc-300"

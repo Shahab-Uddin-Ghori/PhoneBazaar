@@ -5,6 +5,7 @@ import { AdContext } from "../../../components/Adprovider";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { tr } from "date-fns/locale";
+import { UserContext } from "../../../components/UserContextProvider";
 
 function CreateNewAd() {
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ function CreateNewAd() {
   const [description, setDescription] = useState("");
   const { setAdData } = useContext(AdContext); // Use AdContext to save ad data
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const { user } = useContext(UserContext);
+  console.log(user.email);
 
   const handleImageChange = (e) => {
     e.preventDefault();
@@ -39,6 +42,7 @@ function CreateNewAd() {
 
       // Save ad data
       await setAdData({
+        email: user.email,
         imageFile,
         title,
         price,
