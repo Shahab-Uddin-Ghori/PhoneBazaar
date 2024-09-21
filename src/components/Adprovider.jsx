@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { db, storage } from "../firebase"; // Ensure these are correctly imported
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { toast } from "react-toastify";
 
 export const AdContext = createContext();
 
@@ -9,13 +10,17 @@ export const AdProvider = ({ children }) => {
   const [ads, setAds] = useState([]);
 
   const fetchAds = async () => {
-    const adsCollection = collection(db, "ads");
-    const adsSnapshot = await getDocs(adsCollection);
-    const adsList = adsSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setAds(adsList);
+    try {
+      const adsCollection = collection(db, "ads");
+      const adsSnapshot = await getDocs(adsCollection);
+      const adsList = adsSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setAds(adsList);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   useEffect(() => {
