@@ -22,7 +22,14 @@ function CreateNewAd() {
   const { setAdData } = useContext(AdContext); // Use AdContext to save ad data
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { user } = useContext(UserContext);
-  console.log(user.email);
+  // console.log(user.email);
+
+  useEffect(() => {
+    if (user.isLogin == false) {
+      navigate("/");
+      toast.info("Please Login First");
+    }
+  }, [user]);
 
   const handleImageChange = (e) => {
     e.preventDefault();
