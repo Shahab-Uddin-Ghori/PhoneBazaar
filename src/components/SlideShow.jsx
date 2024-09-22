@@ -48,10 +48,10 @@ function SlideShow() {
         theme == "light"
           ? "bg-zinc-50 text-zinc-800"
           : "bg-zinc-800 text-zinc-300"
-      } w-full flex flex-col h-[calc(100vh-6rem)] mt-24 bg-sky-400`}
+      } w-full flex flex-col h-[calc(100vh-6rem)] mt-24 `}
     >
-      <div className="intro max-w-full px-10 py-7 ">
-        <h1 className="mb-2 text-4xl font-bold">Welcome Phone Bazaar Wala</h1>
+      <div className="intro max-w-full pl-5 py-7 ">
+        <h1 className="mb-2 text-3xl font-bold">Welcome Phone Bazaar Wala</h1>
         <p className="sm:w-3/4 md:3/4 w-full text-pretty ">
           Discover a seamless marketplace for new and used mobile phones. Buy
           from verified sellers or dealers, set your own prices, and enjoy
@@ -60,7 +60,7 @@ function SlideShow() {
         </p>
       </div>
       {/* Slider Wrapper */}
-      <div className="videoContainer w-full overflow-hidden h-full pb-2 bg-gray-500 ">
+      <div className="videoContainer w-full overflow-hidden h-full pb-2 ">
         <div
           className="flex transition-transform duration-500 ease-linear w-full h-full "
           style={{
@@ -74,7 +74,7 @@ function SlideShow() {
                 index === activeIndex ? "scale-100" : "scale-100 opacity-90"
               } h-full `}
             >
-              <div className="card h-full w-full   border shadow-md  overflow-hidden border-none outline-none bg-black">
+              <div className="card h-full w-full   border shadow-md  overflow-hidden border-none outline-none ">
                 <div className="imgContainer flex  items-center justify-center w-full h-full overflow-hidden relative">
                   <video
                     src={card.url}
