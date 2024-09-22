@@ -72,7 +72,7 @@ function UserSignup() {
         <section
           className={`${
             theme == "light" ? "bg-zinc-50 h-screen " : "bg-zinc-800"
-          } min-h-screen`}
+          } min-h-screen p-5`}
         >
           <div
             className={`${
