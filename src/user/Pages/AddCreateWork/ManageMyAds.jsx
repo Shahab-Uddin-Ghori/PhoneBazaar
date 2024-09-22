@@ -41,16 +41,16 @@ function ManageMyAds() {
                   key={index} // Use key in the outermost element of map
                   className={`${
                     theme === "light"
-                      ? "bg-zinc-50 text-zinc-800"
-                      : "bg-zinc-900 text-zinc-300"
+                      ? "bg-zinc-50 text-zinc-800 shadow-sm shadow-zinc-400"
+                      : "bg-zinc-900 text-zinc-300 shadow-sm shadow-zinc-950"
                   } border-none outline-none rounded-lg shadow-md overflow-hidden w-full max-w-md`}
                 >
                   {/* Image Section */}
-                  <div className="h-48 overflow-hidden object-contain object-center">
+                  <div className="h-48 overflow-hidden flex flex-col justify-between ">
                     <img
                       src={ad.imageFile}
                       alt={ad.title}
-                      className="w-full h-56 object-cover"
+                      className="w-full h-56 object-contain"
                     />
                   </div>
 
@@ -96,24 +96,10 @@ function ManageMyAds() {
 
                     {/* Message and Edit Ad.. */}
                     <div className="flex flex-col gap-5">
-                      {/* Message */}
-                      {location.pathname === "/Explore" && (
-                        <button
-                          onClick={() => navigate("/Messages")}
-                          className={`${
-                            theme === "light"
-                              ? "bg-zinc-900 text-zinc-300"
-                              : "bg-orange-600 text-zinc-300"
-                          } w-full py-2 rounded-md font-semibold hover:opacity-95 transition`}
-                        >
-                          Message
-                        </button>
-                      )}
-
                       {/* Action Button */}
                       {location.pathname === "/ManageMyAds" && (
                         <button
-                          onClick={() => navigate("/CreateNewAd")}
+                          onClick={() => navigate("/EditAd")}
                           className={`${
                             theme === "light"
                               ? "bg-zinc-900 text-zinc-300"

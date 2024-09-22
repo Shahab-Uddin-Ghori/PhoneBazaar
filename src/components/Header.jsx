@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
 // import { auth } from "../firebase";
 import { FiSearch, FiSun, FiMoon, FiMenu, FiCrosshair } from "react-icons/fi";
@@ -15,6 +15,7 @@ function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const [sidebar, setSideBar] = useState(false);
   const [theme, setTheme] = useContext(ThemeContext);
   const { user } = useContext(UserContext);
@@ -29,6 +30,22 @@ function Header() {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  // Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // check user state to navigate user Acc..
   useEffect(() => {
@@ -246,7 +263,7 @@ function Header() {
           </div>
 
           {/* Profile Dropdown */}
-          <div className="relative ">
+          <div className="relative" ref={dropdownRef}>
             <button
               onClick={toggleMenu}
               className={`${

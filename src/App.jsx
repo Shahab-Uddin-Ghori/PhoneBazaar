@@ -15,6 +15,7 @@ import Profile from "./user/Pages/Profile";
 import CreateNewAd from "./user/Pages/AddCreateWork/CreateNewAd";
 import ManageMyAds from "./user/Pages/AddCreateWork/ManageMyAds";
 import PageNotFound from "./components/PageNotFound";
+import EditAd from "./user/Pages/AddCreateWork/EditAd";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/UserLogin" element={<UserLogin />} />
             <Route path="/UserSignup" element={<UserSignup />} />
             <Route path="/Profile" element={<Profile />} />
+            <Route path="/EditAd" element={<EditAd />} />
             <Route path="/*" element={<PageNotFound />} />
           </Routes>
         </div>

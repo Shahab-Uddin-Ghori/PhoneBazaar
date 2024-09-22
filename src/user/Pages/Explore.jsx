@@ -25,25 +25,27 @@ function Explore() {
           <h1 className="text-2xl font-bold mb-6 ">
             Explore the World of Phone
           </h1>
+          {/* container div  */}
           <div
-            className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4`}
+            className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8`}
           >
             {ads.length > 0 ? (
               ads.map((ad, index) => (
+                // ad container
                 <div
                   key={index}
                   className={`${
                     theme == "light"
-                      ? "bg-zinc-50 text-zinc-800"
-                      : "bg-zinc-900 text-zinc-300"
-                  }  border-none outline-none rounded-lg shadow-md overflow-hidden w-full max-w-md`}
+                      ? "bg-zinc-50 text-zinc-800 shadow-sm shadow-zinc-400"
+                      : "bg-zinc-900 text-zinc-300 shadow-sm shadow-zinc-950"
+                  }  border-none outline-none rounded-lg  overflow-hidden w-full max-w-md flex flex-col justify-between `}
                 >
                   {/* Image Section */}
-                  <div className="h-48 overflow-hidden object-contain object-center">
+                  <div className="h-48 overflow-hidden ">
                     <img
                       src={ad.imageFile}
                       alt={ad.title}
-                      className="w-full h-56 object-cover "
+                      className="w-full h-56 object-contain "
                     />
                   </div>
 
@@ -83,7 +85,7 @@ function Explore() {
                     <p className="text-sm  mb-1">
                       <strong>Description:</strong>
                     </p>
-                    <p className="text-sm  mb-4 h-16 overflow-auto">
+                    <p className="text-sm  mb-4 h-16 overflow-auto ">
                       {ad.description}
                     </p>
 
