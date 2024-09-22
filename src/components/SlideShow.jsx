@@ -48,10 +48,10 @@ function SlideShow() {
         theme == "light"
           ? "bg-zinc-50 text-zinc-800"
           : "bg-zinc-800 text-zinc-300"
-      } max-w-full flex  flex-col  justify-center  h-[calc(100vh-6rem)] mt-24`}
+      } w-full flex flex-col h-[calc(100vh-6rem)] mt-24 bg-sky-400`}
     >
-      <div className="intro ml-10 mr-10 mb-10 max-w-full ">
-        <h1 className="mb-5 text-4xl font-bold">Welcome Phone Bazaar Wala</h1>
+      <div className="intro max-w-full px-10 py-7 ">
+        <h1 className="mb-2 text-4xl font-bold">Welcome Phone Bazaar Wala</h1>
         <p className="sm:w-3/4 md:3/4 w-full text-pretty ">
           Discover a seamless marketplace for new and used mobile phones. Buy
           from verified sellers or dealers, set your own prices, and enjoy
@@ -60,9 +60,9 @@ function SlideShow() {
         </p>
       </div>
       {/* Slider Wrapper */}
-      <div className="videoContainer w-full flex justify-between items-center overflow-hidden  h-2/4 lg:h-3/5 ">
+      <div className="videoContainer w-full overflow-hidden h-full pb-2 bg-gray-500 ">
         <div
-          className="flex transition-transform duration-500 ease-in-out w-full h-full "
+          className="flex transition-transform duration-500 ease-linear w-full h-full "
           style={{
             transform: `translateX(-${activeIndex * 100}%) `,
           }}
@@ -70,12 +70,12 @@ function SlideShow() {
           {sliderObj.map((card, index) => (
             <div
               key={index}
-              className={`min-w-full flex-shrink-0 flex justify-center items-center transition-transform ${
-                index === activeIndex ? "scale-100" : "scale-75 opacity-50"
+              className={`min-w-full  flex justify-center items-center transition-transform ${
+                index === activeIndex ? "scale-100" : "scale-100 opacity-90"
               } h-full `}
             >
-              <div className="card w-100 h-56 md:w-[100%] sm:w-[100%] sm:h-full md:h-full lg:h-full  border shadow-md  overflow-hidden border-none outline-none ">
-                <div className="imgContainer flex items-center justify-center w-full h-full overflow-hidden relative">
+              <div className="card h-full w-full   border shadow-md  overflow-hidden border-none outline-none bg-black">
+                <div className="imgContainer flex  items-center justify-center w-full h-full overflow-hidden relative">
                   <video
                     src={card.url}
                     ref={(el) => (videoRefs.current[index] = el)} // Store reference to each video

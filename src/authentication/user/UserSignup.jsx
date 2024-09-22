@@ -71,8 +71,8 @@ function UserSignup() {
       ) : (
         <section
           className={`${
-            theme == "light" ? "bg-zinc-50 h-screen " : "bg-zinc-800"
-          } min-h-screen p-5`}
+            theme == "light" ? "bg-zinc-50 " : "bg-zinc-800"
+          } min-h-[calc(100vh-6rem)] py-5`}
         >
           <div
             className={`${
