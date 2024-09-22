@@ -98,7 +98,7 @@ function Profile() {
                     <div className="animate-spin rounded-full h-36 w-36 border-t-4 border-b-4 border-orange-600 absolute"></div>
                     <label
                       htmlFor="fileInput"
-                      className="rounded-full cursor-pointer overflow-hidden z-9 bg-zinc-900 dark:bg-gray-600 w-36 h-36 flex items-center justify-center"
+                      className="rounded-full cursor-pointer overflow-hidden z-10 bg-zinc-900 dark:bg-gray-600 w-36 h-36 flex items-center justify-center"
                     >
                       {ProfileImg ? (
                         <img

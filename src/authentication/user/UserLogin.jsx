@@ -110,7 +110,7 @@ const UserLogin = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       id="email"
-                      className="peer block w-full rounded border border-gray-300 bg-transparent px-3 py-2 outline-none focus:border-zinc-600 focus:ring-1 focus:ring-zinc-500 transition-all dark:text-white"
+                      className=" block w-full rounded border border-gray-300 bg-transparent px-3 py-2 outline-none focus:border-zinc-600 focus:ring-1 focus:ring-zinc-500 transition-all dark:text-white"
                       placeholder=" "
                     />
                     <label
