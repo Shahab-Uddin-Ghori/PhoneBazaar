@@ -127,7 +127,7 @@ const UserLogin = () => {
                       type="password"
                       onChange={(e) => setPassword(e.target.value)}
                       id="password"
-                      className="peer block w-full rounded border border-gray-300 bg-transparent px-3 py-2 outline-none focus:border-zinc-600 focus:ring-1 focus:ring-zinc-500 transition-all dark:text-white"
+                      className="peer block w-full rounded border border-gray-300 bg-transparent px-3 py-2 outline-none focus:border-zinc-600 focus:ring-1 focus:ring-zinc-500 transition-all "
                       placeholder=" "
                     />
                     <label
