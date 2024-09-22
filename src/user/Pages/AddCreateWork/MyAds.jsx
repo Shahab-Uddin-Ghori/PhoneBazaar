@@ -8,11 +8,10 @@ import { Link } from "react-router-dom";
 function MyAds() {
   const { user } = useContext(UserContext);
   const [theme] = useContext(ThemeContext);
-  const [bgImg, setBgImg] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user.isLogin === false) {
+    if (!user?.isLogin) {
       navigate("/");
       toast.info("Please Login First");
     }
@@ -20,158 +19,62 @@ function MyAds() {
 
   return (
     <div
-      style={{
-        backgroundImage: `url(${bgImg}) `,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
       className={`MyAds ${
         theme === "light"
           ? "bg-zinc-50 text-zinc-800"
           : "bg-zinc-800 text-zinc-300"
-      } w-full min-h-screen `}
+      } w-full min-h-screen py-10`}
     >
-      {/* Create New Ad Header */}
+      {/* Page Header */}
       <h1
         className={`${
           theme === "light" ? "text-zinc-800" : "text-zinc-300"
-        } text-2xl font-bold mt-36 ml-5 md: sm:text-4xl ${
-          !bgImg ? "text-white" : "text-orange-200"
-        }`}
+        } text-2xl sm:text-4xl font-bold text-center mb-12`}
       >
-        Manage your Ads
+        Manage Your Ads & Create New Ads
       </h1>
 
-      {/* Animated Ad Section */}
-      <div
-        className={`${
-          theme === "light"
-            ? "bg-zinc-800 text-zinc-300"
-            : "bg-zinc-50 text-zinc-800"
-        } max-w-ful h-12 mx-auto mt-10 flex justify-center items-center relative overflow-hidden`}
-      >
-        {/* Manage Your Ads */}
+      {/* Cards Container */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-10 px-5 sm:px-0">
+        {/* Manage Ads Card */}
         <Link
-          onMouseOver={() => {
-            setBgImg(
-              `https://supplyant.com/wp-content/uploads/2020/09/mobile-advertising.png`
-            );
-          }}
-          onMouseOut={() => {
-            setBgImg(false);
-          }}
           to="/ManageMyAds"
-          className={`${
-            theme == "light"
-              ? "bg-zinc-800 text-zinc-300 hover:text-orange-600"
-              : "bg-zinc-50 text-zinc-700 hover:text-zinc-900"
-          } text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl   w-40 sm:w-48 md:w-56 lg:w-64 text-center absolute z-10 rounded-lg box-shad`}
-          style={{
-            opacity: 0.95,
-            filter: "blur(0.05px)",
-          }}
+          className="bg-gradient-to-r from-blue-500 to-indigo-600 shadow-xl rounded-lg transform hover:scale-105 transition-all duration-500 ease-out"
         >
-          My Ads
+          <div className="p-6 sm:p-10 text-center text-white">
+            <h2 className="text-xl sm:text-3xl font-bold mb-4">
+              Manage My Ads
+            </h2>
+            <p className="text-sm sm:text-lg mb-6">
+              Effortlessly manage, edit, update, or delete your listings at any
+              time. Track ad performance and make adjustments to improve
+              visibility.
+            </p>
+            <button className="bg-white text-blue-600 font-semibold py-2 px-4 rounded-full transition-transform transform hover:scale-105">
+              Go to Manage Ads
+            </button>
+          </div>
         </Link>
 
-        {/* manage ad para */}
-        <div className="flex absolute w-full h-full justify-start items-center animate-marquee">
-          <p className="whitespace-nowrap px-4" style={{ marginRight: "50px" }}>
-            Manage your ads effortlessly with Phone Bazaar! Easily edit, update,
-            or delete your listings at any time. Track ad performance with
-            real-time views and interaction metrics, and make adjustments to
-            improve visibility. Our simple dashboard allows you to boost your
-            ad, change prices, and update details, ensuring your phone gets sold
-            faster. Stay in control of your ads and manage everything from one
-            place for a smooth selling experience!
-          </p>
-          <p className="whitespace-nowrap px-4" style={{ marginRight: "50px" }}>
-            Manage your ads effortlessly with Phone Bazaar! Easily edit, update,
-            or delete your listings at any time. Track ad performance with
-            real-time views and interaction metrics, and make adjustments to
-            improve visibility. Our simple dashboard allows you to boost your
-            ad, change prices, and update details, ensuring your phone gets sold
-            faster. Stay in control of your ads and manage everything from one
-            place for a smooth selling experience!
-          </p>
-        </div>
-      </div>
-
-      {/* Create New Ad Header */}
-      <h1
-        className={`${
-          theme === "light" ? "text-zinc-800" : "text-zinc-300"
-        } text-2xl font-bold mt-36 ml-5 md: sm:text-4xl ${
-          !bgImg ? "text-white" : "text-orange-200"
-        }`}
-      >
-        Create New Ad
-      </h1>
-
-      {/* Animated Ad Section */}
-      <div
-        className={`${
-          theme === "light"
-            ? "bg-zinc-800 text-zinc-300"
-            : "bg-zinc-50 text-zinc-800"
-        } max-w-ful h-12 mx-auto mt-10 flex justify-center items-center relative overflow-hidden`}
-      >
-        {/* Heading on Top */}
+        {/* Create New Ad Card */}
         <Link
-          onMouseOver={() => {
-            setBgImg(
-              `https://techreport.com/wp-content/uploads/2023/10/Google-Display-Network.webp`
-            );
-          }}
-          onMouseOut={() => {
-            setBgImg(false);
-          }}
           to="/CreateNewAd"
-          className={`${
-            theme == "light"
-              ? "bg-zinc-800 text-zinc-300 hover:text-orange-600"
-              : "bg-zinc-50 text-zinc-700 hover:text-zinc-900"
-          } text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl w-40 sm:w-48 md:w-56 lg:w-64 text-center absolute z-10 rounded-lg box-shad `}
-          style={{
-            opacity: 0.95,
-            filter: "blur(0.05px)", // Slight blur effect
-          }}
+          className="bg-gradient-to-r from-green-400 to-teal-500 shadow-xl rounded-lg transform hover:scale-105 transition-all duration-500 ease-out"
         >
-          Create Ad
+          <div className="p-6 sm:p-10 text-center text-white">
+            <h2 className="text-xl sm:text-3xl font-bold mb-4">
+              Create New Ad
+            </h2>
+            <p className="text-sm sm:text-lg mb-6">
+              Quickly create a new ad, upload photos, set your price, and let
+              the offers roll in. Boost your ad visibility with our premium
+              options.
+            </p>
+            <button className="bg-white text-green-600 font-semibold py-2 px-4 rounded-full transition-transform transform hover:scale-105">
+              Create Ad
+            </button>
+          </div>
         </Link>
-
-        {/* Wrapper for Continuous Scrolling */}
-        <div className="flex absolute w-full h-full justify-start items-center animate-marquee">
-          <p className="whitespace-nowrap px-4" style={{ marginRight: "50px" }}>
-            Selling your phone? Phone Bazaar makes it faster and easier! Create
-            a new ad in just minutes, upload photos, set your price, and let the
-            offers roll in. With our premium ad boosting and brand filtering,
-            your phone gets seen by serious buyers—ensuring a quick sale!
-          </p>
-          <p className="whitespace-nowrap px-4" style={{ marginRight: "50px" }}>
-            Selling your phone? Phone Bazaar makes it faster and easier! Create
-            a new ad in just minutes, upload photos, set your price, and let the
-            offers roll in. With our premium ad boosting and brand filtering,
-            your phone gets seen by serious buyers—ensuring a quick sale!
-          </p>
-        </div>
-
-        {/* Animation Styles */}
-        <style>{`
-          @keyframes marquee {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-100%);
-            }
-          }
-
-          .animate-marquee {
-            animation: marquee 20s linear infinite;
-          }
-        `}</style>
       </div>
     </div>
   );

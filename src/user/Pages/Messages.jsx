@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { UserContext } from "../../components/UserContextProvider";
 import { ThemeContext } from "../../components/ModeThemeContext";
-import { FaPaperPlane, FaUserCircle } from "react-icons/fa";
+import { FaPaperPlane, FaUserCircle, FaMicrophone } from "react-icons/fa";
 import { IoMdArrowBack } from "react-icons/io";
 
 // Dummy chat data (to be replaced with real-time Firebase chat)
@@ -24,13 +24,15 @@ function Messages() {
   const navigate = useNavigate();
   const [chatMessages, setChatMessages] = useState(dummyChat);
   const [newMessage, setNewMessage] = useState("");
+  const [recording, setRecording] = useState(false);
+  const [audioURL, setAudioURL] = useState("");
+  const [mediaRecorder, setMediaRecorder] = useState(null);
   const messagesEndRef = useRef(null);
 
   // Check if user is logged in
   useEffect(() => {
     if (user.isLogin === false) {
       navigate("/");
-      toast.info("Please Login First");
     }
   }, [user, navigate]);
 
@@ -50,13 +52,43 @@ function Messages() {
     }
     const newChat = {
       id: chatMessages.length + 1,
-      sender: "buyer", // Assuming the logged-in user is the buyer
+      sender: "buyer",
       message: newMessage,
     };
     setChatMessages([...chatMessages, newChat]);
     setNewMessage("");
 
     // Implement Firebase/Backend message saving logic here
+  };
+
+  // Handle voice recording
+  const handleRecordVoice = async () => {
+    if (recording) {
+      mediaRecorder.stop();
+      setRecording(false);
+    } else {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      setMediaRecorder(recorder);
+
+      recorder.ondataavailable = (e) => {
+        const audioBlob = new Blob([e.data], { type: "audio/wav" });
+        const audioURL = URL.createObjectURL(audioBlob);
+        setAudioURL(audioURL);
+
+        // Save/send audio message here (e.g., Firebase)
+        const newChat = {
+          id: chatMessages.length + 1,
+          sender: "buyer",
+          message: "Voice Message",
+          audioURL: audioURL,
+        };
+        setChatMessages([...chatMessages, newChat]);
+      };
+
+      recorder.start();
+      setRecording(true);
+    }
   };
 
   return (
@@ -81,7 +113,7 @@ function Messages() {
         </div>
 
         {/* Chat Messages */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-6 h-full">
           {chatMessages.map((msg) => (
             <div
               key={msg.id}
@@ -89,22 +121,25 @@ function Messages() {
                 msg.sender === "buyer" ? "justify-end" : "justify-start"
               }`}
             >
-              <div
-                className={`p-3 rounded-lg max-w-xs ${
-                  msg.sender === "buyer"
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 dark:bg-gray-600 text-black dark:text-white"
-                }`}
-              >
-                {msg.message}
-              </div>
+              {msg.audioURL ? (
+                <audio controls src={msg.audioURL}></audio>
+              ) : (
+                <div
+                  className={`p-3 rounded-lg max-w-xs ${
+                    msg.sender === "buyer"
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200 dark:bg-gray-600 text-black dark:text-white"
+                  }`}
+                >
+                  {msg.message}
+                </div>
+              )}
             </div>
           ))}
-          {/* Reference div to scroll to the latest message */}
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Message Input Area */}
+        {/* Message Input and Voice Recording */}
         <form
           onSubmit={handleSendMessage}
           className=" px-4 py-3 flex items-center"
@@ -116,6 +151,15 @@ function Messages() {
             className="flex-1 bg-white text-zinc-800 dark:bg-gray-700 dark:border-gray-600 border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300"
             placeholder="Type your message..."
           />
+          <button
+            type="button"
+            onClick={handleRecordVoice}
+            className={`ml-4 bg-red-500 hover:bg-red-600 text-white p-3 rounded-full transition ease-in-out ${
+              recording ? "bg-red-600" : "bg-red-500"
+            }`}
+          >
+            <FaMicrophone />
+          </button>
           <button
             type="submit"
             className="ml-4 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full transition ease-in-out"
