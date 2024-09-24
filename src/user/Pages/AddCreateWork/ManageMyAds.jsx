@@ -99,7 +99,7 @@ function ManageMyAds() {
                       {/* Action Button */}
                       {location.pathname === "/ManageMyAds" && (
                         <button
-                          onClick={() => navigate("/EditAd")}
+                          onClick={() => navigate("/CreateNewAd")}
                           className={`${
                             theme === "light"
                               ? "bg-zinc-900 text-zinc-300"

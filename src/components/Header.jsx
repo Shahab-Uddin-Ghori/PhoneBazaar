@@ -4,12 +4,13 @@ import { getAuth, signOut } from "firebase/auth";
 import { FiSearch, FiSun, FiMoon, FiMenu, FiCrosshair } from "react-icons/fi";
 import { FaLine, FaUserCircle } from "react-icons/fa";
 import Logo from "../Images/Logo.png";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { ThemeContext } from "./ModeThemeContext";
 import { UserContext } from "./UserContextProvider";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaModx, FaX } from "react-icons/fa6";
+import { FaX } from "react-icons/fa6";
+import { SearchContextValue } from "../user/Pages/AddCreateWork/SearchContext";
 
 function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -19,7 +20,9 @@ function Header() {
   const [sidebar, setSideBar] = useState(false);
   const [theme, setTheme] = useContext(ThemeContext);
   const { user } = useContext(UserContext);
-  // console.log(theme);
+  const [search, setSearch] = useContext(SearchContextValue);
+  const navigate = useNavigate();
+  console.log(search);
 
   // mode of toggle theme
   const toggleDarkMode = () => {
@@ -248,9 +251,16 @@ function Header() {
 
         {/* Right Side: Search, Profile, and Theme Toggle */}
         <div className="flex items-center space-x-4 mr-5">
+          {/*  */}
+
           {/* Search Input */}
           <div className="relative lg:flex hidden items-center justify-center   ">
             <input
+              onClick={() => navigate("/Explore")}
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
               type="text"
               placeholder="Search..."
               className={`${
@@ -259,7 +269,10 @@ function Header() {
                   : "bg-zinc-800 text-zinc-100 "
               } px-4 py-2 rounded-full border-none focus:outline-none shadow-sm `}
             />
-            <FiSearch className="absolute top-3 right-3 text-orange-700 dark:text-gray-400" />
+            <FiSearch
+              className="absolute top-3 right-3 text-orange-700 dark:text-gray-400"
+              // onClick={searchYourAd}
+            />
           </div>
 
           {/* Profile Dropdown */}
