@@ -84,7 +84,7 @@ function Explore() {
                         </h2>
                       </div>
                       <p className="text-md font-bold text-orange-600 mb-1">
-                        ${ad.price} {/* Ad price */}
+                        Rs: {ad.price} {/* Ad price */}
                       </p>
                       <p className="text-sm mb-1">
                         <strong>Brand:</strong> {ad.brand} {/* Ad brand */}

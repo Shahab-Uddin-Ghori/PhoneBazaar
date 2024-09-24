@@ -1,29 +1,32 @@
-// initilizing app
+// Import necessary functions from Firebase SDK
+// Initialize the Firebase app
 import { initializeApp } from "firebase/app";
-// analytics of app
+// Import for Firebase analytics functionality
 import { getAnalytics } from "firebase/analytics";
-// for authentication
+// Import for Firebase authentication services
 import { getAuth } from "firebase/auth";
-// for firestore save data doc..
+// Import for Firestore database services
 import { getFirestore } from "firebase/firestore";
-// of storage saving data like img..
+// Import for Firebase storage services (for storing files like images)
 import { getStorage } from "firebase/storage";
 
-// api config
+// Firebase configuration object containing API keys and identifiers
 const firebaseConfig = {
-  apiKey: "AIzaSyDNXVDDQUynRno4srT08PIwDZEWZ9RyJKI",
-  authDomain: "phonebazaarwala.firebaseapp.com",
-  projectId: "phonebazaarwala",
-  storageBucket: "phonebazaarwala.appspot.com",
-  messagingSenderId: "159955818428",
-  appId: "1:159955818428:web:9658fa7239cfb278a57db9",
-  measurementId: "G-PJWT5E9KHZ",
+  apiKey: "AIzaSyDNXVDDQUynRno4srT08PIwDZEWZ9RyJKI", // API key for authentication
+  authDomain: "phonebazaarwala.firebaseapp.com", // Auth domain for Firebase Authentication
+  projectId: "phonebazaarwala", // Project ID for Firestore
+  storageBucket: "phonebazaarwala.appspot.com", // Storage bucket for file uploads
+  messagingSenderId: "159955818428", // Sender ID for Firebase Cloud Messaging
+  appId: "1:159955818428:web:9658fa7239cfb278a57db9", // Unique identifier for the app
+  measurementId: "G-PJWT5E9KHZ", // Measurement ID for Google Analytics
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
-const analytics = getAnalytics(app);
+// Initialize Firebase with the provided configuration
+const app = initializeApp(firebaseConfig); // Create a Firebase app instance
+const auth = getAuth(app); // Get the authentication instance
+const db = getFirestore(app); // Get the Firestore database instance
+const storage = getStorage(app); // Get the storage instance for file handling
+const analytics = getAnalytics(app); // Initialize analytics for tracking app usage
+
+// Export the initialized Firebase services for use in other parts of the app
 export { app, auth, db, storage, analytics };

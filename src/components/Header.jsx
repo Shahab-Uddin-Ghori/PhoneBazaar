@@ -22,7 +22,6 @@ function Header() {
   const { user } = useContext(UserContext);
   const [search, setSearch] = useContext(SearchContextValue);
   const navigate = useNavigate();
-  console.log(search);
 
   // mode of toggle theme
   const toggleDarkMode = () => {

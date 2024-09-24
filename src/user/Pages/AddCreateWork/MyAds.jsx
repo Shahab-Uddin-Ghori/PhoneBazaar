@@ -1,28 +1,29 @@
-import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../../components/UserContextProvider";
-import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-import { ThemeContext } from "../../../components/ModeThemeContext";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { UserContext } from "../../../components/UserContextProvider"; // Importing UserContext for accessing user information
+import { useNavigate } from "react-router"; // Importing useNavigate for navigation between routes
+import { toast } from "react-toastify"; // Importing toast for displaying notifications
+import { ThemeContext } from "../../../components/ModeThemeContext"; // Importing ThemeContext for managing theme styles
+import { Link } from "react-router-dom"; // Importing Link for navigation without page refresh
 
 function MyAds() {
-  const { user } = useContext(UserContext);
-  const [theme] = useContext(ThemeContext);
-  const navigate = useNavigate();
+  const { user } = useContext(UserContext); // Accessing the user data from UserContext
+  const [theme] = useContext(ThemeContext); // Accessing the theme context to determine current theme
+  const navigate = useNavigate(); // Initializing the navigate function for routing
 
   useEffect(() => {
+    // Effect to check if the user is logged in
     if (!user?.isLogin) {
-      navigate("/");
-      toast.info("Please Login First");
+      navigate("/"); // Redirect to the home page if the user is not logged in
+      toast.info("Please Login First"); // Displaying a notification to inform the user to log in
     }
-  }, [user, navigate]);
+  }, [user, navigate]); // Effect depends on user and navigate
 
   return (
     <div
       className={`MyAds ${
         theme === "light"
-          ? "bg-zinc-50 text-zinc-800"
-          : "bg-zinc-800 text-zinc-300"
+          ? "bg-zinc-50 text-zinc-800" // Light theme styles
+          : "bg-zinc-800 text-zinc-300" // Dark theme styles
       } w-full min-h-screen py-10`}
     >
       {/* Page Header */}
@@ -38,7 +39,7 @@ function MyAds() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-10 px-5 sm:px-0">
         {/* Manage Ads Card */}
         <Link
-          to="/ManageMyAds"
+          to="/ManageMyAds" // Navigation link to manage ads
           className="bg-gradient-to-r from-blue-500 to-indigo-600 shadow-xl rounded-lg transform hover:scale-105 transition-all duration-500 ease-out"
         >
           <div className="p-6 sm:p-10 text-center text-white">
@@ -58,7 +59,7 @@ function MyAds() {
 
         {/* Create New Ad Card */}
         <Link
-          to="/CreateNewAd"
+          to="/CreateNewAd" // Navigation link to create a new ad
           className="bg-gradient-to-r from-green-400 to-teal-500 shadow-xl rounded-lg transform hover:scale-105 transition-all duration-500 ease-out"
         >
           <div className="p-6 sm:p-10 text-center text-white">

@@ -1,91 +1,92 @@
-import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../components/UserContextProvider";
-import { useNavigate } from "react-router";
-import { FaUserEdit } from "react-icons/fa";
-import { ThemeContext } from "../../components/ModeThemeContext";
-import { doc, updateDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { db, storage } from "../../firebase";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import SpinnerLoader from "../../components/SpinnerLoader";
+import React, { useContext, useEffect, useState } from "react"; // Import necessary libraries and hooks
+import { UserContext } from "../../components/UserContextProvider"; // Import UserContext to manage user data
+import { useNavigate } from "react-router"; // Import useNavigate for page redirection
+import { FaUserEdit } from "react-icons/fa"; // Import icon for user edit
+import { ThemeContext } from "../../components/ModeThemeContext"; // Import ThemeContext for theming
+import { doc, updateDoc } from "firebase/firestore"; // Import Firestore functions for document operations
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage"; // Import Storage functions for file handling
+import { db, storage } from "../../firebase"; // Import Firebase configurations for Firestore and Storage
+import { toast } from "react-toastify"; // Import toast for notifications
+import "react-toastify/dist/ReactToastify.css"; // Import styles for toast notifications
+import SpinnerLoader from "../../components/SpinnerLoader"; // Import SpinnerLoader component for loading state
 
 function Profile() {
-  const [theme] = useContext(ThemeContext);
+  const [theme] = useContext(ThemeContext); // Get current theme from ThemeContext
+  const { user, setUser } = useContext(UserContext); // Get user data and setUser function from UserContext
+  const navigate = useNavigate(); // Initialize navigation for page redirection
 
-  const { user, setUser } = useContext(UserContext);
-  const navigate = useNavigate();
+  // State variables for managing form inputs
+  const [ProfileImg, SetProfileImg] = useState(user?.ProfileImg); // State for profile image
+  const [username, setUsername] = useState(user?.username || ""); // State for username
+  const [email, setEmail] = useState(user?.email || ""); // State for email
+  const [password, setPassword] = useState(""); // State for password
+  const [contact, setContact] = useState(user?.contact || ""); // State for contact
+  const [description, setDescription] = useState(user?.description || ""); // State for user description
+  const [loading, setLoading] = useState(false); // State for loading indicator
 
-  // State for form inputs
-  const [ProfileImg, SetProfileImg] = useState(user?.ProfileImg);
-  const [username, setUsername] = useState(user?.username || "");
-  const [email, setEmail] = useState(user?.email || "");
-  const [password, setPassword] = useState("");
-  const [contact, setContact] = useState(user?.contact || "");
-  const [description, setDescription] = useState(user?.description || "");
-  const [loading, setLoading] = useState(false);
-
+  // Effect to redirect to home if user is not logged in
   useEffect(() => {
     if (!user?.isLogin) {
-      navigate("/");
+      navigate("/"); // Redirect to home page
     }
-  }, [user]);
+  }, [user]); // Dependency array: run effect when user changes
 
-  // Handle form submission
+  // Handle form submission for profile update
   const handleProfileUpdate = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission behavior
     try {
-      setLoading(true);
+      setLoading(true); // Set loading state to true
       const obj = {
         username,
         email,
         contact,
         description,
       };
-      const docRef = doc(db, "users", user.uid);
-      await updateDoc(docRef, obj);
-      setUser({ ...user, ...obj });
-      setLoading(false);
-      toast.success("Profile Updated Successfully");
+      const docRef = doc(db, "users", user.uid); // Reference to user's document in Firestore
+      await updateDoc(docRef, obj); // Update the user's document with new values
+      setUser({ ...user, ...obj }); // Update the user context with new values
+      setLoading(false); // Reset loading state
+      toast.success("Profile Updated Successfully"); // Show success notification
     } catch (error) {
-      setLoading(false);
-      console.log("🚀 ~ handleProfileUpdate ~ error:", error);
-      toast.error(error.message);
+      setLoading(false); // Reset loading state on error
+      console.log("🚀 ~ handleProfileUpdate ~ error:", error); // Log error for debugging
+      toast.error(error.message); // Show error notification
     }
   };
 
+  // Handle user image upload
   const handeUpdateUserImage = async (e) => {
-    console.log("e=>", e.target.files[0]);
+    console.log("e=>", e.target.files[0]); // Log selected file for debugging
     try {
-      setLoading(true);
-      const storageRef = ref(storage, `users/${user.uid}`);
-      // image upload krne ke lye
+      setLoading(true); // Set loading state to true
+      const storageRef = ref(storage, `users/${user.uid}`); // Reference to storage location for user image
+      // Upload image to storage
       const uploadImg = await uploadBytes(storageRef, e.target.files[0]);
-      // image lena parhta he url
+      // Get download URL of the uploaded image
       const url = await getDownloadURL(storageRef);
-      SetProfileImg(url);
-      const docRef = doc(db, "users", user.uid);
-      await updateDoc(docRef, { ProfileImg: url });
-      setUser({ ...user, ProfileImg: url });
-      toast.success("Profile Updated Successfully");
-      setLoading(false);
+      SetProfileImg(url); // Update local profile image state
+      const docRef = doc(db, "users", user.uid); // Reference to user's document in Firestore
+      await updateDoc(docRef, { ProfileImg: url }); // Update user's document with new image URL
+      setUser({ ...user, ProfileImg: url }); // Update user context with new profile image
+      toast.success("Profile Updated Successfully"); // Show success notification
+      setLoading(false); // Reset loading state
     } catch (error) {
-      setLoading(false);
-      console.log(error);
-      toast.error(error.message);
+      setLoading(false); // Reset loading state on error
+      console.log(error); // Log error for debugging
+      toast.error(error.message); // Show error notification
     }
   };
 
   return (
     <>
       {loading == true ? (
-        <SpinnerLoader />
+        <SpinnerLoader /> // Show loading spinner if loading
       ) : (
         <section
           className={`${
             theme === "light"
-              ? "bg-zinc-100 h-screen text-zinc-800"
-              : "bg-gray-800 h-screen text-zinc-500"
+              ? "bg-zinc-100 h-screen text-zinc-800" // Light theme styles
+              : "bg-gray-800 h-screen text-zinc-500" // Dark theme styles
           }`}
         >
           <div className="container h-full px-6 py-24 mx-auto ">
@@ -105,21 +106,21 @@ function Profile() {
                           src={
                             typeof ProfileImg === "string"
                               ? ProfileImg
-                              : URL.createObjectURL(ProfileImg)
+                              : URL.createObjectURL(ProfileImg) // Create a local URL for image preview
                           }
                           className="cursor-pointer h-34 w-34 bg-blue-200 rounded-full border z-10"
                           alt="Profile"
                         />
                       ) : (
-                        <FaUserEdit size={30} className="text-gray-500" />
+                        <FaUserEdit size={30} className="text-gray-500" /> // Show edit icon if no image
                       )}
                     </label>
                     <input
                       type="file"
                       id="fileInput"
-                      accept="image/*"
+                      accept="image/*" // Accept only image files
                       hidden
-                      onChange={handeUpdateUserImage}
+                      onChange={handeUpdateUserImage} // Handle image upload
                     />
                   </div>
 
@@ -127,11 +128,11 @@ function Profile() {
                   <div className="relative mb-8">
                     <input
                       type="text"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      value={username} // Bind value to state
+                      onChange={(e) => setUsername(e.target.value)} // Update state on change
                       className="peer block w-full rounded border-0 bg-transparent px-3 py-2 outline-none border-b-2 border-zinc-300 transition-all duration-200 ease-linear focus:text-primary peer-focus:text-primary"
                       id="usernameInput"
-                      required
+                      required // Make field required
                     />
                     <label
                       htmlFor="usernameInput"
@@ -145,12 +146,12 @@ function Profile() {
                   <div className="relative mb-8">
                     <input
                       type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={email} // Bind value to state
+                      onChange={(e) => setEmail(e.target.value)} // Update state on change
                       className="peer block w-full rounded border-0 bg-transparent px-3 py-2 outline-none border-b-2 border-zinc-300 transition-all duration-200 ease-linear focus:text-primary peer-focus:text-primary"
                       id="emailInput"
-                      required
-                      disabled
+                      required // Make field required
+                      disabled // Disable editing for email
                     />
                     <label
                       htmlFor="emailInput"
@@ -164,8 +165,8 @@ function Profile() {
                   <div className="relative mb-8">
                     <input
                       type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={password} // Bind value to state
+                      onChange={(e) => setPassword(e.target.value)} // Update state on change
                       className="peer block w-full rounded border-0 bg-transparent px-3 py-2 outline-none border-b-2 border-zinc-300 transition-all duration-200 ease-linear focus:text-primary peer-focus:text-primary"
                       id="passwordInput"
                     />
@@ -181,8 +182,8 @@ function Profile() {
                   <div className="relative mb-8">
                     <input
                       type="text"
-                      value={contact}
-                      onChange={(e) => setContact(e.target.value)}
+                      value={contact} // Bind value to state
+                      onChange={(e) => setContact(e.target.value)} // Update state on change
                       className="peer block w-full rounded border-0 bg-transparent px-3 py-2 outline-none border-b-2 border-zinc-300 transition-all duration-200 ease-linear focus:text-primary peer-focus:text-primary"
                       id="contactInput"
                     />
@@ -197,10 +198,11 @@ function Profile() {
                   {/* Description */}
                   <div className="relative mb-8">
                     <textarea
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
+                      value={description} // Bind value to state
+                      onChange={(e) => setDescription(e.target.value)} // Update state on change
                       className="peer block w-full rounded border-0 bg-transparent px-3 py-2 outline-none border-b-2 border-zinc-300 transition-all duration-200 ease-linear focus:text-primary peer-focus:text-primary"
                       id="descriptionInput"
+                      rows={5} // Set rows for textarea
                     />
                     <label
                       htmlFor="descriptionInput"
@@ -210,12 +212,10 @@ function Profile() {
                     </label>
                   </div>
 
-                  {/* Submit */}
+                  {/* Submit Button */}
                   <button
                     type="submit"
-                    className={`${
-                      theme === "light" ? "bg-zinc-900" : "bg-orange-700"
-                    } w-full rounded px-7 pb-2.5 pt-3 text-sm font-medium text-white transition duration-150 ease-in-out hover:bg-orange-700 focus:outline-none`}
+                    className="w-full rounded bg-orange-600 py-3 font-semibold text-white hover:bg-orange-500 transition duration-200 ease-in-out"
                   >
                     Update Profile
                   </button>
@@ -229,4 +229,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Profile; // Export Profile component for use in other parts of the application
