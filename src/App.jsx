@@ -16,7 +16,6 @@ import Profile from "./user/Pages/Profile"; // Import User Profile page
 import CreateNewAd from "./user/Pages/AddCreateWork/CreateNewAd"; // Import Create New Ad page
 import ManageMyAds from "./user/Pages/AddCreateWork/ManageMyAds"; // Import Manage My Ads page
 import PageNotFound from "./components/PageNotFound"; // Import Page Not Found component
-import EditAd from "./user/Pages/AddCreateWork/EditAd"; // Import Edit Ad page
 
 function App() {
   return (
@@ -49,7 +48,6 @@ function App() {
             {/* User Signup route */}
             <Route path="/Profile" element={<Profile />} />{" "}
             {/* User Profile route */}
-            <Route path="/EditAd" element={<EditAd />} /> {/* Edit Ad route */}
             <Route path="/*" element={<PageNotFound />} />{" "}
             {/* Fallback route for 404 Not Found */}
           </Routes>
