@@ -7,6 +7,10 @@ import { toast } from "react-toastify";
 import { tr } from "date-fns/locale";
 import { UserContext } from "../../../components/UserContextProvider";
 import SpinnerLoader from "../../../components/SpinnerLoader";
+import dayjs from "dayjs"; // Import dayjs
+import relativeTime from "dayjs/plugin/relativeTime"; // Import relativeTime plugin
+dayjs.extend(relativeTime);
+// dayjs().to(dayjs("1990-01-01")); // "31 years ago"
 
 function CreateNewAd() {
   const navigate = useNavigate();
@@ -62,7 +66,8 @@ function CreateNewAd() {
         location,
         contact,
         description,
-        timestamp: new Date(Date.now()).toLocaleString(),
+        // timestamp: new Date(Date.now()).toLocaleString(),
+        timestamp: dayjs().toISOString(),
       });
       setLoading(false);
       toast.success("Ad Under Preview");

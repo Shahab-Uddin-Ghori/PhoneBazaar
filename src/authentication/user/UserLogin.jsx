@@ -16,6 +16,12 @@ const UserLogin = () => {
   const [email, setEmail] = useState(""); // State to manage email input
   const [password, setPassword] = useState(""); // State to manage password input
   const { user } = useContext(UserContext); // Get user data from context
+  // Effect to redirect logged-in users to the home page
+  useEffect(() => {
+    if (user.isLogin == true) {
+      navigate("/"); // Redirect to home page if user is logged in
+    }
+  }, [user]); // Dependency on user state
 
   // Function to handle form submission for login
   const handleLoginForm = async (e) => {
@@ -39,13 +45,6 @@ const UserLogin = () => {
       setLoading(false); // Set loading state to false if there's an error
     }
   };
-
-  // Effect to redirect logged-in users to the home page
-  useEffect(() => {
-    if (user.isLogin == true) {
-      navigate("/"); // Redirect to home page if user is logged in
-    }
-  }, [user]); // Dependency on user state
 
   return (
     <>
